@@ -4,9 +4,12 @@
  */
 package Logica_Cliente;
 
+import Helpers.HelperImpresion;
 import Helpers.HelperRegistro;
+import Helpers.HelperTiempo;
 import Helpers.HelperValidacion;
 import Logica_Conexion.Conexion;
+import Logica_Conexion.PersonaProvider;
 import Logica_Negocio.Persona;
 import Logica_Negocio.Producto;
 import java.io.FileNotFoundException;
@@ -264,6 +267,25 @@ public class Main {
                     HelperRegistro.RegistrarPersonaNube(objper,id,producto);
                     producto = "";
                     break;
+            
+                case 2 :
+                    lspersonasnube = PersonaProvider.CargarInfoPersona();
+                    HelperImpresion.ImprimirInfoPersonaNube(lspersonasnube);
+                    
+                    break;
+                
+                case 4 :
+                    
+                    String codigo = "";
+                    lspersonasnube=PersonaProvider.CargarInfoPersona();
+                    System.out.println("Digite el uid a buscar");
+                    codigo = scan.nextLine();
+                    long inicio = System.currentTimeMillis();
+                    HelperImpresion.BuscarPersonaNube(lspersonasnube, codigo);
+                    long fin = System.currentTimeMillis();
+                    HelperTiempo.RetornarTImepo(fin, inicio);
+                    break;
+                    
             }
         }while (opc!=5);
     }

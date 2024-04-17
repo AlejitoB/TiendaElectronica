@@ -16,13 +16,13 @@ import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 /**
  *
  * @author 1058932609
  */
 public class PersonaProvider {
-    
 
     CollectionReference reference;
     public static Firestore db;
@@ -53,51 +53,87 @@ public class PersonaProvider {
             CollectionReference persona = Conexion.db.collection("Persona");
             ApiFuture<QuerySnapshot> querySnap = persona.get();
             for (DocumentSnapshot document : querySnap.get().getDocuments()) {
-                objper = new Persona(document.getString("uid"),
+                objper = new Persona(document.getString("Uid"),
                         document.getString("Nombre"),
-                        document.getString("Apellido"), 
-                        document.getString("Cedula"), 
+                        document.getString("Apellido"),
+                        document.getString("Cedula"),
                         document.getString("Direccion"),
-                        document.getString("Productos"), 
+                        document.getString("Productos"),
                         document.getString("Nom_img")
                 );
                 lspersona.add(objper);
             }
 
         } catch (Exception e) {
-            System.out.println("Error"+ e.getMessage());
+            System.out.println("Error" + e.getMessage());
         }
         return lspersona;
     }
 
-    public static boolean RetornarUid(String uid){
+    public static boolean RetornarUid(String uid) {
         ArrayList<String> uids = new ArrayList<>();
-        boolean rta= true;
+        boolean rta = true;
         try {
-            CollectionReference persona= Conexion.db.collection("Persona");
-            ApiFuture<QuerySnapshot> querySnap= persona.get();
-            for (DocumentSnapshot document: querySnap.get().getDocuments()){
+            CollectionReference persona = Conexion.db.collection("Persona");
+            ApiFuture<QuerySnapshot> querySnap = persona.get();
+            for (DocumentSnapshot document : querySnap.get().getDocuments()) {
                 uids.add(document.getString("uid"));
-                
-                
+
             }
             for (int i = 0; i < uids.size(); i++) {
-                if (uid.equals(uids.get(i)))
-                {
+                if (uid.equals(uids.get(i))) {
                     return rta;
-                }
-                else {
+                } else {
                     return !rta;
                 }
-                
+
             }
         } catch (Exception e) {
-            System.out.println("Error"+ e.getMessage());
+            System.out.println("Error" + e.getMessage());
         }
         return rta;
     }
+
+    public static Persona CargarInfoPersonaCodigo(String codigo) {
+
+        Persona objper;
+        Persona objper1 = null;
+
+        ArrayList<Persona> lspersona = new ArrayList<>();
+        ArrayList<Producto> lsprodu = new ArrayList<>();
+
+        try {
+            CollectionReference persona = Conexion.db.collection("Persona");
+            ApiFuture<QuerySnapshot> querySnap = persona.get();
+
+            for (DocumentSnapshot document : querySnap.get().getDocuments()) {
+
+                objper = new Persona(document.getString("Uid"),
+                        document.getString("Nombre"),
+                        document.getString("Apellido"),
+                        document.getString("Cedula"),
+                        document.getString("Direccion"),
+                        document.getString("Productos"),
+                        document.getString("Nom_img")
+                
+                );
+                lspersona.add(objper);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+        for (int i = 0; i < lspersona.size(); i++) {
+            
+        
+            if (codigo.equals(lspersona.get(i).getUid())) 
+            {
+                objper1 = lspersona.get(1);
+            }
+                
+
+            }
+            return objper1;
+        }
 }
     
-
-
-   
