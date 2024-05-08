@@ -4,9 +4,11 @@
  */
 package GUI_Admin;
 
+import GUI_Cliente.MenuCliente;
 import Helpers.HelperCifrado;
 import Logica_Conexion.Conexion;
 import Logica_Negocio.Administrador;
+import Logica_Negocio.Cliente;
 import Logica_Negocio.Usuario;
 import java.awt.Color;
 import java.awt.Image;
@@ -27,6 +29,9 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
 
     public String pathc;
     public String s;
+
+    Usuario usuAdmin;
+    Usuario usuCliente;
 
     /**
      * Creates new form InicioSesionAdministrador
@@ -62,9 +67,29 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
 
             System.out.println("usu ci inter" + "\t" + cifrarusu);
             System.out.println("usu con inter" + "\t" + cifrarcontra);
+            System.out.println("Usu" + cifrarusu);
 
-            Usuario usuAdmin = new Administrador("Admin", "12345");
+            if (usuario.equals("Admin")) {
+                usuAdmin = new Administrador("Admin", "12345");
+            } else if (usuario.equals("Cliente")) {
+                usuCliente = new Cliente("Cliente", "12345");
+            }
 
+            if (usuCliente instanceof Cliente) {
+                boolean rta1 = usuCliente.LogOn(cifrarusu, cifrarcontra);
+
+                if (rta1) {
+                    JOptionPane.showMessageDialog(null, "Bienvenido Cliente");
+                    MenuCliente menu = new MenuCliente();
+                    menu.setVisible(true);
+                    dispose();
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuario o contraseña invalida");
+                }
+            } else if (usuAdmin instanceof Administrador){
+
+//            Usuario usuAdmin = new Administrador("Admin", "12345");
             boolean rta = usuAdmin.LogOn(cifrarusu, cifrarcontra);
 
             if (rta) {
@@ -75,7 +100,7 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
 
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario o contraseña invalida");
-
+            }
             }
         } else {
 
@@ -115,7 +140,7 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Gill Sans MT", 3, 24)); // NOI18N
         jLabel1.setText("Inicio de Sesion Administrador");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 37, 332, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 332, -1));
 
         jLabel2.setFont(new java.awt.Font("Gill Sans MT", 3, 18)); // NOI18N
         jLabel2.setText("Usuario :");
@@ -140,9 +165,9 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 264, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, -1, -1));
         getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 140, -1));
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 570, 480));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 570, 450));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

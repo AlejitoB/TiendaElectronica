@@ -5,11 +5,14 @@
 package GUI_Admin;
 
 import Logica_Conexion.Conexion;
+import Logica_Conexion.PersonaProvider;
+import Logica_Negocio.Persona;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
@@ -20,6 +23,7 @@ import javax.swing.ImageIcon;
 public class VisualizarPersonasAdministrador extends javax.swing.JFrame {
   public String pathc;
     public String s;
+      ArrayList<Persona> lspersonasnube;
 
     /**
      * Creates new form VisualizarPersonasAdministrador
@@ -56,9 +60,9 @@ public class VisualizarPersonasAdministrador extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -71,21 +75,23 @@ public class VisualizarPersonasAdministrador extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTextPane1.setEditable(false);
+        jScrollPane3.setViewportView(jTextPane1);
+
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 320, 190));
+
         jLabel1.setFont(new java.awt.Font("Gill Sans MT", 3, 24)); // NOI18N
         jLabel1.setText("Visualizar Personas");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 14, -1, -1));
 
-        jTextArea2.setEditable(false);
-        jTextArea2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
-
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 55, 337, 187));
-
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setFont(new java.awt.Font("Gill Sans MT", 3, 14)); // NOI18N
         jButton1.setText("Mostrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 270, -1, -1));
 
         jButton2.setBackground(new java.awt.Color(204, 204, 204));
@@ -97,7 +103,7 @@ public class VisualizarPersonasAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 270, -1, -1));
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 420, 310));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, -10, 510, 330));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -107,6 +113,12 @@ public class VisualizarPersonasAdministrador extends javax.swing.JFrame {
         menua.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         lspersonasnube = PersonaProvider.CargarInfoPersona();
+         String im= Helpers.HelperImpresion.ImprimirInfoInterfaz(lspersonasnube);
+         jTextPane1.setText(im);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,8 +161,8 @@ public class VisualizarPersonasAdministrador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
 }

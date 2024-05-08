@@ -264,7 +264,7 @@ public class Main {
                     objper = new Persona(String.valueOf(id), nombre, apellido, direccion, cedula, producto, nom_img);
                     objper.setProductos(lsproduglobal);
                     lspersonalocal.add(objper);
-                    HelperRegistro.RegistrarPersonaNube(objper,id,producto);
+                    HelperRegistro.RegistrarPersonaNubeI(objper,id,producto);
                     producto = "";
                     break;
             
