@@ -73,6 +73,10 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
                 usuAdmin = new Administrador("Admin", "12345");
             } else if (usuario.equals("Cliente")) {
                 usuCliente = new Cliente("Cliente", "12345");
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña invalida");
+                jTextField1.setBorder(new LineBorder(Color.RED, 2));
+                jPasswordField1.setBorder(new LineBorder(Color.RED, 2));
             }
 
             if (usuCliente instanceof Cliente) {
@@ -87,20 +91,20 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña invalida");
                 }
-            } else if (usuAdmin instanceof Administrador){
+            } else if (usuAdmin instanceof Administrador) {
 
 //            Usuario usuAdmin = new Administrador("Admin", "12345");
-            boolean rta = usuAdmin.LogOn(cifrarusu, cifrarcontra);
+                boolean rta = usuAdmin.LogOn(cifrarusu, cifrarcontra);
 
-            if (rta) {
-                JOptionPane.showMessageDialog(null, "Bienvenido Administrador");
-                MenuAdministrador menu = new MenuAdministrador();
-                menu.setVisible(true);
-                dispose();
+                if (rta) {
+                    JOptionPane.showMessageDialog(null, "Bienvenido Administrador");
+                    MenuAdministrador menu = new MenuAdministrador();
+                    menu.setVisible(true);
+                    dispose();
 
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuario o contraseña invalida");
-            }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuario o contraseña invalida");
+                }
             }
         } else {
 
