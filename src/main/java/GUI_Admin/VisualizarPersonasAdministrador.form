@@ -65,7 +65,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Gill Sans MT" size="24" style="3"/>
+          <Font name="Roboto Black" size="24" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Visualizar Personas"/>
       </Properties>
@@ -81,7 +81,7 @@
           <Color blue="cc" green="cc" red="cc" type="rgb"/>
         </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Gill Sans MT" size="14" style="3"/>
+          <Font name="Roboto Black" size="14" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Mostrar"/>
       </Properties>
@@ -100,7 +100,7 @@
           <Color blue="cc" green="cc" red="cc" type="rgb"/>
         </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Gill Sans MT" size="14" style="3"/>
+          <Font name="Roboto Black" size="14" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Atras"/>
       </Properties>
@@ -116,7 +116,7 @@
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="-20" y="-10" width="510" height="330"/>
+          <AbsoluteConstraints x="-20" y="-10" width="520" height="350"/>
         </Constraint>
       </Constraints>
     </Component>

@@ -274,46 +274,58 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         setTitle("Registrar Persona Administrador");
         getContentPane().setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Gill Sans MT", 3, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Registrar Producto");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(160, 0, 170, 22);
+        jLabel1.setBounds(140, 40, 220, 30);
 
-        jLabel2.setFont(new java.awt.Font("Gill Sans MT", 3, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombre");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(20, 70, 90, 16);
+        jLabel2.setBounds(20, 130, 100, 20);
 
-        jLabel3.setFont(new java.awt.Font("Gill Sans MT", 3, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Marca");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 100, 80, 20);
+        jLabel3.setBounds(20, 170, 80, 17);
 
-        jLabel4.setFont(new java.awt.Font("Gill Sans MT", 3, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Serial");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(20, 130, 70, 17);
+        jLabel4.setBounds(20, 200, 70, 17);
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField1);
-        jTextField1.setBounds(190, 69, 260, 22);
+        jTextField1.setBounds(190, 108, 180, 30);
         getContentPane().add(jTextField2);
-        jTextField2.setBounds(190, 100, 260, 22);
+        jTextField2.setBounds(190, 150, 180, 30);
         getContentPane().add(jTextField3);
-        jTextField3.setBounds(192, 132, 260, 22);
+        jTextField3.setBounds(190, 190, 180, 30);
 
         jSeparator1.setBackground(new java.awt.Color(0, 204, 204));
         jSeparator1.setForeground(new java.awt.Color(0, 204, 204));
         getContentPane().add(jSeparator1);
-        jSeparator1.setBounds(0, 202, 490, 13);
+        jSeparator1.setBounds(0, 250, 490, 10);
 
-        jLabel5.setFont(new java.awt.Font("Gill Sans MT", 3, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Cantidad Productos");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(10, 40, 150, 16);
+        jLabel5.setBounds(20, 90, 150, 20);
 
-        jLabel6.setFont(new java.awt.Font("Gill Sans MT", 3, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Nombre Imagen");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(0, 360, 110, 17);
+        jLabel6.setBounds(20, 410, 110, 17);
 
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -321,18 +333,42 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField5);
-        jTextField5.setBounds(259, 239, 187, 22);
+        jTextField5.setBounds(260, 290, 187, 20);
+
+        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField6ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField6);
-        jTextField6.setBounds(259, 267, 187, 22);
+        jTextField6.setBounds(260, 320, 187, 22);
+
+        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField7ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField7);
-        jTextField7.setBounds(259, 295, 187, 22);
+        jTextField7.setBounds(260, 350, 187, 22);
+
+        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField8ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField8);
-        jTextField8.setBounds(259, 323, 187, 22);
+        jTextField8.setBounds(260, 380, 187, 22);
+
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField4);
-        jTextField4.setBounds(190, 40, 103, 22);
+        jTextField4.setBounds(190, 72, 180, 30);
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
-        jButton1.setFont(new java.awt.Font("Gill Sans MT", 3, 18)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
         jButton1.setText("Registrar Persona");
         jButton1.setActionCommand("Registrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -341,10 +377,10 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(260, 440, 190, 23);
+        jButton1.setBounds(290, 440, 190, 23);
 
         jButton2.setBackground(new java.awt.Color(204, 204, 204));
-        jButton2.setFont(new java.awt.Font("Gill Sans MT", 3, 14)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
         jButton2.setText("Registrar Productos");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -352,10 +388,10 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(300, 170, 160, 23);
+        jButton2.setBounds(310, 230, 170, 20);
 
         jButton3.setBackground(new java.awt.Color(204, 204, 204));
-        jButton3.setFont(new java.awt.Font("Gill Sans MT", 3, 14)); // NOI18N
+        jButton3.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
         jButton3.setText("Aceptar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -363,17 +399,24 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton3);
-        jButton3.setBounds(378, 40, 80, 24);
+        jButton3.setBounds(390, 70, 90, 24);
 
-        jLabel10.setFont(new java.awt.Font("Gill Sans MT", 3, 18)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Registrar Persona");
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(160, 210, 170, 20);
+        jLabel10.setBounds(150, 260, 210, 20);
+
+        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField9ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField9);
-        jTextField9.setBounds(259, 351, 187, 22);
+        jTextField9.setBounds(260, 410, 187, 22);
 
         jButton4.setBackground(new java.awt.Color(204, 204, 204));
-        jButton4.setFont(new java.awt.Font("Gill Sans MT", 3, 18)); // NOI18N
+        jButton4.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
         jButton4.setText("Atras");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -381,35 +424,38 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton4);
-        jButton4.setBounds(6, 432, 80, 29);
+        jButton4.setBounds(30, 440, 80, 24);
 
-        jLabel14.setFont(new java.awt.Font("Gill Sans MT", 3, 14)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Nombre");
         getContentPane().add(jLabel14);
-        jLabel14.setBounds(0, 242, 80, 17);
+        jLabel14.setBounds(20, 290, 80, 17);
 
-        jLabel15.setFont(new java.awt.Font("Gill Sans MT", 3, 14)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Apellido");
         getContentPane().add(jLabel15);
-        jLabel15.setBounds(0, 270, 80, 17);
+        jLabel15.setBounds(20, 320, 80, 17);
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel12.setText("jLabel12");
         getContentPane().add(jLabel12);
-        jLabel12.setBounds(58, 404, 380, 16);
+        jLabel12.setBounds(60, 400, 380, 0);
 
-        jLabel16.setFont(new java.awt.Font("Gill Sans MT", 3, 14)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Cedula");
         getContentPane().add(jLabel16);
-        jLabel16.setBounds(0, 300, 80, 17);
+        jLabel16.setBounds(20, 350, 80, 17);
 
-        jLabel17.setFont(new java.awt.Font("Gill Sans MT", 3, 14)); // NOI18N
+        jLabel17.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Direccion");
         getContentPane().add(jLabel17);
-        jLabel17.setBounds(0, 330, 80, 17);
+        jLabel17.setBounds(20, 377, 80, 20);
         getContentPane().add(jLabel13);
-        jLabel13.setBounds(-10, -10, 570, 500);
+        jLabel13.setBounds(-10, -20, 580, 530);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -439,6 +485,30 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         menu.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField9ActionPerformed
+
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField7ActionPerformed
+
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
+
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField8ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
