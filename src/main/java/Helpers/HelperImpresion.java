@@ -191,5 +191,46 @@ public class HelperImpresion {
         }
         return info;
     }
+      public static String ImprimirInfoInterfazLocal(Persona per) {
+        String info = "";
+        String[] parts = null,
+                parts2 = null;
+        Producto objprodu;
+        ArrayList<Producto> lsnube = new ArrayList<>();
+        int bandera = 0;
+
+                info += "Persona"  + "\n"
+                        + "El id de la persona es:" + per.getUid() + "\n"
+                        + "El nombre de la persona es" + "\t" + per.getNombre() + "\n"
+                        + "El Apellido de la persona es" + "\t" + per.getApellido() + "\n"
+                        + "La cedula de la persona es" + "\t" + per.getCedula() + "\n"
+                        + "La direccion de la persona es" + "\t" + per.getDireccion() + "\n"
+                        + "\n";
+
+                parts = per.getProducto().split(";");
+
+                for (int j = 0; j < parts.length; j++) {
+
+                    parts2 = parts[j].split(",");
+                    objprodu = new Producto(parts2[0], parts2[1], parts2[2]);
+                    lsnube.add(objprodu);
+                }
+
+                for (int k = 0; k < lsnube.size(); k++) {
+                    info += "Producto:" + "\t" + (k + 1) + "\n"
+                            + "Nombre" + "\t" + lsnube.get(k).getNombre() + "\n"
+                            + "Marca" + "\t" + lsnube.get(k).getMarca() + "\n"
+                            + "Serial" + "\t" + lsnube.get(k).getSerial() + "\n"
+                            + "\n";
+                }
+
+                lsnube.clear();
+                parts = null;
+                parts2 = null;
+                
+         return info;
+
+            }
+
 
 }

@@ -278,25 +278,25 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Registrar Producto");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(140, 40, 220, 30);
+        jLabel1.setBounds(10, 70, 220, 30);
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombre");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(20, 130, 100, 20);
+        jLabel2.setBounds(10, 140, 100, 20);
 
         jLabel3.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Marca");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 170, 80, 17);
+        jLabel3.setBounds(10, 170, 80, 17);
 
         jLabel4.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Serial");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(20, 200, 70, 17);
+        jLabel4.setBounds(10, 200, 70, 17);
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -304,11 +304,11 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField1);
-        jTextField1.setBounds(190, 108, 180, 30);
+        jTextField1.setBounds(190, 140, 180, 22);
         getContentPane().add(jTextField2);
-        jTextField2.setBounds(190, 150, 180, 30);
+        jTextField2.setBounds(190, 170, 180, 20);
         getContentPane().add(jTextField3);
-        jTextField3.setBounds(190, 190, 180, 30);
+        jTextField3.setBounds(190, 200, 180, 20);
 
         jSeparator1.setBackground(new java.awt.Color(0, 204, 204));
         jSeparator1.setForeground(new java.awt.Color(0, 204, 204));
@@ -319,7 +319,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Cantidad Productos");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(20, 90, 150, 20);
+        jLabel5.setBounds(10, 110, 150, 20);
 
         jLabel6.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -365,7 +365,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField4);
-        jTextField4.setBounds(190, 72, 180, 30);
+        jTextField4.setBounds(190, 110, 180, 20);
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
@@ -405,7 +405,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Registrar Persona");
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(150, 260, 210, 20);
+        jLabel10.setBounds(10, 260, 210, 20);
 
         jTextField9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -441,7 +441,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         getContentPane().add(jLabel12);
-        jLabel12.setBounds(60, 400, 380, 0);
+        jLabel12.setBounds(110, 440, 300, 30);
 
         jLabel16.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
@@ -455,7 +455,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         getContentPane().add(jLabel17);
         jLabel17.setBounds(20, 377, 80, 20);
         getContentPane().add(jLabel13);
-        jLabel13.setBounds(-10, -20, 580, 530);
+        jLabel13.setBounds(-10, -10, 580, 530);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
