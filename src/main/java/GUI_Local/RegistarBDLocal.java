@@ -7,6 +7,7 @@ package GUI_Local;
 import Logica_Conexion.Conexion;
 import Logica_Conexion.PersonaDAO;
 import Logica_Negocio.Persona;
+import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.sql.PreparedStatement;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
 
 /**
  *
@@ -147,7 +149,7 @@ public class RegistarBDLocal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String uid= jTextField1.getText();
+       String uid= jTextField1.getText();
         String nombre= jTextField2.getText();
         String apellido= jTextField3.getText();
         String direccion= jTextField4.getText();
@@ -155,19 +157,61 @@ public class RegistarBDLocal extends javax.swing.JFrame {
         String producto= jTextField6.getText();
         String nombreimg= jTextField7.getText();
          
+             int res, res1, res2, res3, res4, res5, res6;
+            
+
+        res = Helpers.HelperValidacion.ValidarTodo(nombre);
+        res1 = Helpers.HelperValidacion.ValidarTodo(apellido);
+        res2 = Helpers.HelperValidacion.ValidarTodoLetra(cedula);
+        res3 =  Helpers.HelperValidacion.ValidarTodoDireccion(direccion);
+        res4 = Helpers.HelperValidacion.ValidarTodoSerial(nombreimg);
+        res5 = Helpers.HelperValidacion.ValidarVacio(producto);
+        res6 = Helpers.HelperValidacion.ValidarTodoLetra(uid);
+        if (res == 0 && res1 == 0 && res2 == 0 && res3==0 && res4==0 && res5==0 && res6==0) {
         try{
             per = new Persona(uid, nombre, apellido, direccion, cedula, producto, nombreimg);
             PersonaDAO dao= new PersonaDAO();
             dao.add(per);
             
-        //String consulta="INSERT INTO `persona`(`Uid`, `Nombre`, `Apellido`, `Direccion`, `Cedula`, `Producto`, `Nom_img`) VALUES ('"+uid+"','"+nombre+"','"+apellido+"','"+direccion+"','"+cedula+"','"+producto+"','"+nombreimg+"')";
+        String consulta="INSERT INTO `persona`(`Uid`, `Nombre`, `Apellido`, `Direccion`, `Cedula`, `Producto`, `Nom_img`) VALUES ('"+uid+"','"+nombre+"','"+apellido+"','"+direccion+"','"+cedula+"','"+producto+"','"+nombreimg+"')";
         
           JOptionPane.showMessageDialog(null, "Registro Exitoso");
         }catch(Exception e)
         {
             System.out.println("Excepcion"+ e);
         }
-     
+        }
+        else{
+            if (res6 >= 1) {
+                jTextField1.setBorder(new LineBorder(Color.RED, 2));
+                JOptionPane.showMessageDialog(null, "Revise el campo uid");
+            } 
+             if (res >= 1) {
+                jTextField2.setBorder(new LineBorder(Color.RED, 2));
+                JOptionPane.showMessageDialog(null, "Revise el campo nombre");
+            }
+            if (res1 >= 1) {
+                jTextField3.setBorder(new LineBorder(Color.RED, 2));
+                JOptionPane.showMessageDialog(null, "Revise el campo apellido ");
+            }
+            if (res3 >= 1) {
+                jTextField4.setBorder(new LineBorder(Color.RED, 2));
+                JOptionPane.showMessageDialog(null, "Revise el campo direccion");
+            }
+            if (res2 >= 1) {
+                jTextField5.setBorder(new LineBorder(Color.RED, 2));
+                JOptionPane.showMessageDialog(null, "Revise el campo cedula");
+            } 
+             
+            if (res5 >= 1) {
+                jTextField6.setBorder(new LineBorder(Color.RED, 2));
+                JOptionPane.showMessageDialog(null, "Revise el campo Producto");
+            } 
+            if (res4 >= 1) {
+                jTextField7.setBorder(new LineBorder(Color.RED, 2));
+                JOptionPane.showMessageDialog(null, "Revise el campo Nombre Imagen");
+            } 
+        }
         MenuLocal menu = new MenuLocal();
         menu.setVisible(true);
         dispose();
