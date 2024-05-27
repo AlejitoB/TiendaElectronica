@@ -269,6 +269,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Registrar Persona Administrador");
@@ -278,7 +279,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Registrar Producto");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(10, 70, 220, 30);
+        jLabel1.setBounds(10, 60, 220, 30);
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -304,11 +305,23 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField1);
-        jTextField1.setBounds(190, 140, 180, 22);
+        jTextField1.setBounds(190, 130, 180, 30);
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField2);
-        jTextField2.setBounds(190, 170, 180, 20);
+        jTextField2.setBounds(190, 160, 180, 30);
+
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField3);
-        jTextField3.setBounds(190, 200, 180, 20);
+        jTextField3.setBounds(190, 190, 180, 30);
 
         jSeparator1.setBackground(new java.awt.Color(0, 204, 204));
         jSeparator1.setForeground(new java.awt.Color(0, 204, 204));
@@ -333,7 +346,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField5);
-        jTextField5.setBounds(260, 290, 187, 20);
+        jTextField5.setBounds(260, 280, 187, 30);
 
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -341,7 +354,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField6);
-        jTextField6.setBounds(260, 320, 187, 22);
+        jTextField6.setBounds(260, 312, 187, 30);
 
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -349,7 +362,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField7);
-        jTextField7.setBounds(260, 350, 187, 22);
+        jTextField7.setBounds(260, 342, 187, 30);
 
         jTextField8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -357,7 +370,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField8);
-        jTextField8.setBounds(260, 380, 187, 22);
+        jTextField8.setBounds(260, 372, 187, 30);
 
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -365,7 +378,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField4);
-        jTextField4.setBounds(190, 110, 180, 20);
+        jTextField4.setBounds(190, 100, 180, 30);
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
@@ -413,7 +426,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField9);
-        jTextField9.setBounds(260, 410, 187, 22);
+        jTextField9.setBounds(260, 402, 187, 30);
 
         jButton4.setBackground(new java.awt.Color(204, 204, 204));
         jButton4.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
@@ -456,6 +469,8 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         jLabel17.setBounds(20, 377, 80, 20);
         getContentPane().add(jLabel13);
         jLabel13.setBounds(-10, -10, 580, 530);
+        getContentPane().add(jSeparator2);
+        jSeparator2.setBounds(330, 330, 80, 30);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -509,6 +524,14 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -565,6 +588,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;

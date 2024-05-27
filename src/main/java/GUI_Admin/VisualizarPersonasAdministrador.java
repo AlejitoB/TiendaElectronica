@@ -81,6 +81,7 @@ public class VisualizarPersonasAdministrador extends javax.swing.JFrame {
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 320, 190));
 
         jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Visualizar Personas");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 14, -1, -1));
 
@@ -103,7 +104,7 @@ public class VisualizarPersonasAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 270, -1, -1));
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, -10, 520, 350));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, -10, 480, 350));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

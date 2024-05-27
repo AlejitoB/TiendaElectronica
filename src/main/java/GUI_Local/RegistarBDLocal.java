@@ -149,7 +149,7 @@ public class RegistarBDLocal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       String uid= jTextField1.getText();
+      String uid= jTextField1.getText();
         String nombre= jTextField2.getText();
         String apellido= jTextField3.getText();
         String direccion= jTextField4.getText();
@@ -169,11 +169,12 @@ public class RegistarBDLocal extends javax.swing.JFrame {
         res6 = Helpers.HelperValidacion.ValidarTodoLetra(uid);
         if (res == 0 && res1 == 0 && res2 == 0 && res3==0 && res4==0 && res5==0 && res6==0) {
         try{
-            per = new Persona(uid, nombre, apellido, direccion, cedula, producto, nombreimg);
+            per = new Persona(uid, nombre, apellido, cedula, direccion, producto, nombreimg);
             PersonaDAO dao= new PersonaDAO();
             dao.add(per);
             
-        String consulta="INSERT INTO `persona`(`Uid`, `Nombre`, `Apellido`, `Direccion`, `Cedula`, `Producto`, `Nom_img`) VALUES ('"+uid+"','"+nombre+"','"+apellido+"','"+direccion+"','"+cedula+"','"+producto+"','"+nombreimg+"')";
+//        String consulta="INSERT INTO `persona`(`Uid`, `Nombre`, `Apellido`, `Direccion`, `Cedula`, `Producto`, `Nom_img`) VALUES ('"+uid+"','"+nombre+"','"+apellido+"','"+direccion+"','"+cedula+"','"+producto+"','"+nombreimg+"')";
+  String consulta="INSERT INTO `persona`(`Uid`, `Nombre`, `Apellido`, `Cedula`, `Direccion`, `Producto`, `Nom_img`) VALUES ('"+uid+"','"+nombre+"','"+apellido+"','"+direccion+"','"+cedula+"','"+producto+"','"+nombreimg+"')";
         
           JOptionPane.showMessageDialog(null, "Registro Exitoso");
         }catch(Exception e)
@@ -212,6 +213,10 @@ public class RegistarBDLocal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Revise el campo Nombre Imagen");
             } 
         }
+
+
+
+
         MenuLocal menu = new MenuLocal();
         menu.setVisible(true);
         dispose();

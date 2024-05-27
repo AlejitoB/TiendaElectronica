@@ -94,6 +94,7 @@ public class BuscarPersonaCliente extends javax.swing.JFrame {
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, -1, -1));
 
+        jTextPane1.setEditable(false);
         jScrollPane1.setViewportView(jTextPane1);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 236, 164));

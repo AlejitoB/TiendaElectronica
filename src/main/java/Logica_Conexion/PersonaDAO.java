@@ -49,8 +49,7 @@ public class PersonaDAO implements DAOInterfacePersona {
        return n;
        
     }
-
-    @Override
+   @Override
     public Persona getPersona(String id) throws SQLException {
         
         String query
@@ -102,6 +101,60 @@ public class PersonaDAO implements DAOInterfacePersona {
         }
         return ls;
     }
+  
+    
+//    @Override
+//    public Persona getPersona(String id) throws SQLException {
+//        
+//        String query
+//            = "select * from persona where Uid= ?";
+//        PreparedStatement ps
+//            = con.prepareStatement(query);
+// 
+//        ps.setString(1, id);
+//        Persona per=null;
+//        ResultSet rs = ps.executeQuery();
+//        boolean check = false;
+// 
+//        while (rs.next()) {
+//            check = true;
+//            per = new Persona(rs.getString("Uid"),
+//                    rs.getString("Nombre"),
+//            rs.getString("Apellido"),
+//            rs.getString("Direccion"),
+//                    rs.getString("Cedula"),
+//                    rs.getString("Producto"),
+//                    rs.getString("Nom_img"));
+//        }
+// 
+//        if (check == true) {
+//            return per;
+//        }
+//        else
+//            return null;
+//    }
+//
+//    @Override
+//    public ArrayList<Persona> getPersona() throws SQLException {
+//        String query = "select * from persona";
+//        PreparedStatement ps
+//            = con.prepareStatement(query);
+//        ResultSet rs = ps.executeQuery();
+//        ArrayList<Persona> ls = new ArrayList<>();
+// 
+//        while (rs.next()) {
+//            Persona per = new Persona(rs.getString("Uid"),
+//                    rs.getString("Nombre"),
+//            rs.getString("Apellido"),
+//            rs.getString("Direccion"),
+//                    rs.getString("Cedula"),
+//                    rs.getString("Producto"),
+//                    rs.getString("Nom_img"));
+//          
+//            ls.add(per);
+//        }
+//        return ls;
+//    }
 
     @Override
     public void update(Persona per) throws SQLException {
