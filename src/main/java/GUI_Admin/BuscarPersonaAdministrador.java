@@ -33,21 +33,33 @@ public class BuscarPersonaAdministrador extends javax.swing.JFrame {
      * Creates new form BuscarPersona
      */
     ArrayList<Persona> lspersonasnube;
-    Persona objper=null;
+    Persona objper = null;
     public String pathc;
-    public String pathc1 ;
-   
-      public String s;
-   public String s1;
-
+    public String pathc1;
+    public String s;
+    public String s1;
+    
+    // Variable para identificar el sistema operativo
+    public String osName = System.getProperty("os.name").toLowerCase();
 
     public BuscarPersonaAdministrador() {
         initComponents();
-       Path currentRelativePath = Paths.get("");
-         s = currentRelativePath.toAbsolutePath().toString();
-         s1 = currentRelativePath.toAbsolutePath().toString();
-         pathc1 = s1 + "\\Images\\"+"Background"+".jpg";
-                establecerImagenBack();
+        this.setLocationRelativeTo(null);
+        System.out.println(osName);
+        
+        // Obtener el path relativo actual
+        Path currentRelativePath = Paths.get("");
+
+        // Ajuste de ruta basado en el sistema operativo
+        if (osName.equals("linux")) {
+            s1 = currentRelativePath.toAbsolutePath().toString();
+            pathc1 = s1 + "//Images//" + "Background2" + ".jpg";
+            establecerImagenBack();
+        } else if (osName.equals("windows 11") || osName.equals("windows 10")) {
+            s1 = currentRelativePath.toAbsolutePath().toString();
+            pathc1 = s1 + "\\Images\\" + "Background2" + ".jpg";
+            establecerImagenBack();
+        }
     }
 
     /**
@@ -115,27 +127,25 @@ public class BuscarPersonaAdministrador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        long inicio = System.currentTimeMillis();
+       long inicio = System.currentTimeMillis();
         lspersonasnube = PersonaProvider.CargarInfoPersona();
         long fin = System.currentTimeMillis();
         HelperTiempo.RetornarTImepo(fin, inicio);
         String codigo = jTextField1.getText();
         objper = PersonaProvider.CargarInfoPersonaCodigo(codigo);
-        
-        if(objper==null)
-        {
-                 jTextField1.setBorder(new LineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null,"Cliente no encontrado");
-        }
-        else
-        {
+
+        if (objper == null) {
+            jTextField1.setBorder(new LineBorder(Color.RED, 2));
+            JOptionPane.showMessageDialog(null, "Cliente no encontrado");
+        } else {
             jTextField1.setBorder(new LineBorder(Color.BLACK, 1));
             String res = HelperImpresion.ImprimirInfoInterfazNube(lspersonasnube, codigo);
-        jTextPane1.setText(res);
-        pathc = s + "\\Images\\"+objper.getNom_img()+".jpg";
+            jTextPane1.setText(res);
+            pathc = s + "\\Images\\" + objper.getNom_img() + ".jpg";
             System.out.println(pathc);
-                establecerImagen();
+            establecerImagen();
         }
+    
     
     }//GEN-LAST:event_jButton2ActionPerformed
 

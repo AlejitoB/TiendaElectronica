@@ -23,11 +23,11 @@ public class HelperImpresion {
 
         for (int i = 0; i < lspersonasnube.size(); i++) {
             System.out.println("Persona" + "\t" + (i + 1) + "\n"
-                    + "El id de la persona es:" + lspersonasnube.get(i).getUid() + "\n"
-                    + "El nombre de la persona es:" + "\t" + lspersonasnube.get(i).getNombre() + "\n"
-                    + "El Apellido de la persona es:" + "\t" + lspersonasnube.get(i).getApellido() + "\n"
-                    + "La Cedula de la persona es:" + "\t" + lspersonasnube.get(i).getCedula() + "\n"
-                    + "La direccion de la persona es:" + "\t" + lspersonasnube.get(i).getDireccion() + "\n"
+                    + "El id de la persona es  :" + lspersonasnube.get(i).getUid() + "\n"
+                    + "El nombre de la persona es  :" + "\t" + lspersonasnube.get(i).getNombre() + "\n"
+                    + "El Apellido de la persona es  :" + "\t" + lspersonasnube.get(i).getApellido() + "\n"
+                    + "La Cedula de la persona es  :" + "\t" + lspersonasnube.get(i).getCedula() + "\n"
+                    + "La direccion de la persona es  :" + "\t" + lspersonasnube.get(i).getDireccion() + "\n"
             );
             parts = lspersonasnube.get(i).getProducto().split(";");
 
@@ -66,11 +66,11 @@ public class HelperImpresion {
             if (codigo.equals(lspersonasnube.get(i).getUid())) {
                 bandera = 1;
                 System.out.println("Persona" + "\t" + (i + 1) + "\n"
-                        + "El id de la persona es:" + lspersonasnube.get(i).getUid() + "\n"
-                        + "El nombre de la persona es:" + "\t" + lspersonasnube.get(i).getNombre() + "\n"
-                        + "El apellido de la persona es:" + "\t" + lspersonasnube.get(i).getApellido() + "\n"
-                        + "La cedula de la persona es:" + "\t" + lspersonasnube.get(i).getCedula() + "\n"
-                        + "La direccion de la persona es:" + "\t" + lspersonasnube.get(i).getDireccion() + "\n"
+                        + "El id de la persona es :" + lspersonasnube.get(i).getUid() + "\n"
+                        + "El nombre de la persona es :" + "\t" + lspersonasnube.get(i).getNombre() + "\n"
+                        + "El apellido de la persona es :" + "\t" + lspersonasnube.get(i).getApellido() + "\n"
+                        + "La cedula de la persona es :" + "\t" + lspersonasnube.get(i).getCedula() + "\n"
+                        + "La direccion de la persona es :" + "\t" + lspersonasnube.get(i).getDireccion() + "\n"
                 );
                 partes = lspersonasnube.get(i).getProducto().split(";");
 
@@ -82,10 +82,10 @@ public class HelperImpresion {
                 }
 
                 for (int k = 0; k < lsnube.size(); k++) {
-                    System.out.println("Producto:" + "\t" + (k + 1));
-                    System.out.println("Nombre" + "t" + lsnube.get(k).getNombre());
-                    System.out.println("Marca" + "t" + lsnube.get(k).getMarca());
-                    System.out.println("Serial" + "t" + lsnube.get(k).getSerial());
+                    System.out.println("Producto :" + "\t" + (k + 1));
+                    System.out.println("Nombre  :"  + "t" + lsnube.get(k).getNombre());
+                    System.out.println("Marca  :" + "t" + lsnube.get(k).getMarca());
+                    System.out.println("Serial  :" + "t" + lsnube.get(k).getSerial());
                 }
 
                 lsnube.clear();
@@ -110,11 +110,11 @@ public class HelperImpresion {
         for (int i = 0; i < lspersonasnube.size(); i++) {
 
             info += "Persona" + "\t" + (i + 1) + "\n"
-                    + "El id de la persona es:" + lspersonasnube.get(i).getUid() + "\n"
-                    + "El nombre de la persona es" + "\t" + lspersonasnube.get(i).getNombre() + "\n"
-                    + "El Apellido de la persona es" + "\t" + lspersonasnube.get(i).getApellido() + "\n"
-                    + "La cedula de la persona es" + "\t" + lspersonasnube.get(i).getCedula() + "\n"
-                    + "La direccion de la persona es" + "\t" + lspersonasnube.get(i).getDireccion() + "\n"
+                    + "El id de la persona es :" + lspersonasnube.get(i).getUid() + "\n"
+                    + "El nombre de la persona es :" + "\t" + lspersonasnube.get(i).getNombre() + "\n"
+                    + "El Apellido de la persona es :" + "\t" + lspersonasnube.get(i).getApellido() + "\n"
+                    + "La cedula de la persona es :" + "\t" + lspersonasnube.get(i).getCedula() + "\n"
+                    + "La direccion de la persona es :" + "\t" + lspersonasnube.get(i).getDireccion() + "\n"
                     + "\n";
 
             parts = lspersonasnube.get(i).getProducto().split(";");
@@ -128,9 +128,9 @@ public class HelperImpresion {
 
             for (int k = 0; k < lsnube.size(); k++) {
                 info += "Producto:" + "\t" + (k + 1) + "\n"
-                        + "Nombre" + "\t" + lsnube.get(k).getNombre() + "\n"
-                        + "Marca" + "\t" + lsnube.get(k).getMarca() + "\n"
-                        + "Serial" + "\t" + lsnube.get(k).getSerial() + "\n"
+                        + "Nombre :" + "\t" + lsnube.get(k).getNombre() + "\n"
+                        + "Marca :" + "\t" + lsnube.get(k).getMarca() + "\n"
+                        + "Serial :" + "\t" + lsnube.get(k).getSerial() + "\n"
                         + "\n";
             }
 
@@ -155,11 +155,11 @@ public class HelperImpresion {
             if (codigo.equals(lspersonasnube.get(i).getUid())) {
                 bandera = 1;
                 info += "Persona" + "\t" + (i + 1) + "\n"
-                        + "El id de la persona es:" + lspersonasnube.get(i).getUid() + "\n"
-                        + "El nombre de la persona es" + "\t" + lspersonasnube.get(i).getNombre() + "\n"
-                        + "El Apellido de la persona es" + "\t" + lspersonasnube.get(i).getApellido() + "\n"
-                        + "La cedula de la persona es" + "\t" + lspersonasnube.get(i).getCedula() + "\n"
-                        + "La direccion de la persona es" + "\t" + lspersonasnube.get(i).getDireccion() + "\n"
+                        + "El id de la persona es  :" + lspersonasnube.get(i).getUid() + "\n"
+                        + "El nombre de la persona es :" + "\t" + lspersonasnube.get(i).getNombre() + "\n"
+                        + "El Apellido de la persona es :" + "\t" + lspersonasnube.get(i).getApellido() + "\n"
+                        + "La cedula de la persona es :" + "\t" + lspersonasnube.get(i).getCedula() + "\n"
+                        + "La direccion de la persona es :" + "\t" + lspersonasnube.get(i).getDireccion() + "\n"
                         + "\n";
 
                 parts = lspersonasnube.get(i).getProducto().split(";");
@@ -173,9 +173,9 @@ public class HelperImpresion {
 
                 for (int k = 0; k < lsnube.size(); k++) {
                     info += "Producto:" + "\t" + (k + 1) + "\n"
-                            + "Nombre" + "\t" + lsnube.get(k).getNombre() + "\n"
-                            + "Marca" + "\t" + lsnube.get(k).getMarca() + "\n"
-                            + "Serial" + "\t" + lsnube.get(k).getSerial() + "\n"
+                            + "Nombre :" + "\t" + lsnube.get(k).getNombre() + "\n"
+                            + "Marca :" + "\t" + lsnube.get(k).getMarca() + "\n"
+                            + "Serial :" + "\t" + lsnube.get(k).getSerial() + "\n"
                             + "\n";
                 }
 
@@ -200,11 +200,11 @@ public class HelperImpresion {
         int bandera = 0;
 
                 info += "Persona"  + "\n"
-                        + "El id de la persona es:" + per.getUid() + "\n"
-                        + "El nombre de la persona es" + "\t" + per.getNombre() + "\n"
-                        + "El Apellido de la persona es" + "\t" + per.getApellido() + "\n"
-                        + "La cedula de la persona es" + "\t" + per.getCedula() + "\n"
-                        + "La direccion de la persona es" + "\t" + per.getDireccion() + "\n"
+                        + "El id de la persona es  :" + per.getUid() + "\n"
+                        + "El nombre de la persona es :" + "\t" + per.getNombre() + "\n"
+                        + "El Apellido de la persona es :" + "\t" + per.getApellido() + "\n"
+                        + "La cedula de la persona es :" + "\t" + per.getCedula() + "\n"
+                        + "La direccion de la persona es :" + "\t" + per.getDireccion() + "\n"
                         + "\n";
 
                 parts = per.getProducto().split(";");
@@ -217,10 +217,10 @@ public class HelperImpresion {
                 }
 
                 for (int k = 0; k < lsnube.size(); k++) {
-                    info += "Producto:" + "\t" + (k + 1) + "\n"
-                            + "Nombre" + "\t" + lsnube.get(k).getNombre() + "\n"
-                            + "Marca" + "\t" + lsnube.get(k).getMarca() + "\n"
-                            + "Serial" + "\t" + lsnube.get(k).getSerial() + "\n"
+                    info += "Producto :" + "\t" + (k + 1) + "\n"
+                            + "Nombre :" + "\t" + lsnube.get(k).getNombre() + "\n"
+                            + "Marca :" + "\t" + lsnube.get(k).getMarca() + "\n"
+                            + "Serial :" + "\t" + lsnube.get(k).getSerial() + "\n"
                             + "\n";
                 }
 
