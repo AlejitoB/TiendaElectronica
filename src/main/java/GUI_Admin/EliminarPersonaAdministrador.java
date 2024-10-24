@@ -45,14 +45,29 @@ public class EliminarPersonaAdministrador extends javax.swing.JFrame {
     boolean uidesta = true;
     boolean res;
     public int band = 1;
+    public String osName = System.getProperty("os.name").toLowerCase();
 
     public EliminarPersonaAdministrador() {
         initComponents();
         Path currentRelativePath = Paths.get("");
         s = currentRelativePath.toAbsolutePath().toString();
         s1 = currentRelativePath.toAbsolutePath().toString();
-        pathc1 = s1 + "\\Images\\" + "Background" + ".jpg";
-        establecerImagenBack();
+        System.out.println(osName);
+        
+        
+     
+
+        // Ajuste de ruta basado en el sistema operativo
+        if (osName.equals("linux")) {
+            s1 = currentRelativePath.toAbsolutePath().toString();
+           
+            pathc1 = s1 + "//Images//" + "Background2" + ".jpg";
+            establecerImagenBack();
+        } else if (osName.equals("windows 11") || osName.equals("windows 10")) {
+            s1 = currentRelativePath.toAbsolutePath().toString();
+            pathc1 = s1 + "\\Images\\" + "Background2" + ".jpg";
+            establecerImagenBack();
+        }
     }
 
     /**

@@ -53,6 +53,7 @@ public class BuscarPersonaAdministrador extends javax.swing.JFrame {
         // Ajuste de ruta basado en el sistema operativo
         if (osName.equals("linux")) {
             s1 = currentRelativePath.toAbsolutePath().toString();
+           
             pathc1 = s1 + "//Images//" + "Background2" + ".jpg";
             establecerImagenBack();
         } else if (osName.equals("windows 11") || osName.equals("windows 10")) {
@@ -141,9 +142,18 @@ public class BuscarPersonaAdministrador extends javax.swing.JFrame {
             jTextField1.setBorder(new LineBorder(Color.BLACK, 1));
             String res = HelperImpresion.ImprimirInfoInterfazNube(lspersonasnube, codigo);
             jTextPane1.setText(res);
-            pathc = s + "\\Images\\" + objper.getNom_img() + ".jpg";
+            if(osName.equals("linux")) {
+           
+            pathc = s1 + "//Images//" + objper.getNom_img() + ".jpg";
             System.out.println(pathc);
             establecerImagen();
+            
+        } else if (osName.equals("windows 11") || osName.equals("windows 10")) {
+            pathc = s1 + "\\Images\\" + objper.getNom_img() + ".jpg";
+            System.out.println(pathc);
+            establecerImagen();
+        }
+            
         }
     
     
