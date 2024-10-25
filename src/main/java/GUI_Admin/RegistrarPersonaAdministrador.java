@@ -64,11 +64,11 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         if (osName.equals("linux")) {
             s = currentRelativePath.toAbsolutePath().toString();
            
-            pathc1 = s + "//Images//" + "Background2" + ".jpg";
+            pathc1 = s + "//Images//" + "Background" + ".jpg";
             establecerImagen();
         } else if (osName.equals("windows 11") || osName.equals("windows 10")) {
             s1 = currentRelativePath.toAbsolutePath().toString();
-            pathc1 = s1 + "\\Images\\" + "Background2" + ".jpg";
+            pathc1 = s1 + "\\Images\\" + "Background" + ".jpg";
             establecerImagen();
         }
 
@@ -274,10 +274,10 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -294,25 +294,25 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Registrar Producto");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(10, 60, 220, 30);
+        jLabel1.setBounds(10, 10, 220, 30);
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombre");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(10, 140, 100, 20);
+        jLabel2.setBounds(10, 120, 100, 20);
 
         jLabel3.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Marca");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(10, 170, 80, 17);
+        jLabel3.setBounds(10, 160, 80, 17);
 
         jLabel4.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Serial");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(10, 200, 70, 17);
+        jLabel4.setBounds(10, 190, 70, 17);
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -320,7 +320,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField1);
-        jTextField1.setBounds(190, 130, 180, 30);
+        jTextField1.setBounds(190, 110, 180, 30);
 
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -328,7 +328,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField2);
-        jTextField2.setBounds(190, 160, 180, 30);
+        jTextField2.setBounds(190, 150, 180, 30);
 
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -341,19 +341,19 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         jSeparator1.setBackground(new java.awt.Color(0, 204, 204));
         jSeparator1.setForeground(new java.awt.Color(0, 204, 204));
         getContentPane().add(jSeparator1);
-        jSeparator1.setBounds(0, 250, 490, 10);
+        jSeparator1.setBounds(0, 250, 490, 20);
 
         jLabel5.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Cantidad Productos");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(10, 110, 150, 20);
+        jLabel5.setBounds(10, 90, 150, 20);
 
         jLabel6.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Nombre Imagen");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(20, 410, 110, 17);
+        jLabel6.setBounds(20, 420, 110, 17);
 
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -361,7 +361,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField5);
-        jTextField5.setBounds(260, 280, 187, 30);
+        jTextField5.setBounds(260, 290, 187, 30);
 
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -369,7 +369,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField6);
-        jTextField6.setBounds(260, 312, 187, 30);
+        jTextField6.setBounds(260, 320, 187, 30);
 
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -377,7 +377,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField7);
-        jTextField7.setBounds(260, 342, 187, 30);
+        jTextField7.setBounds(260, 350, 187, 30);
 
         jTextField8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -385,7 +385,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField8);
-        jTextField8.setBounds(260, 372, 187, 30);
+        jTextField8.setBounds(260, 380, 187, 30);
 
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -393,7 +393,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField4);
-        jTextField4.setBounds(190, 100, 180, 30);
+        jTextField4.setBounds(190, 70, 180, 30);
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
@@ -405,7 +405,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(290, 440, 190, 23);
+        jButton1.setBounds(270, 440, 190, 20);
 
         jButton2.setBackground(new java.awt.Color(204, 204, 204));
         jButton2.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
@@ -418,31 +418,6 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         getContentPane().add(jButton2);
         jButton2.setBounds(310, 230, 170, 20);
 
-        jButton3.setBackground(new java.awt.Color(204, 204, 204));
-        jButton3.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
-        jButton3.setText("Aceptar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton3);
-        jButton3.setBounds(390, 70, 90, 24);
-
-        jLabel10.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Registrar Persona");
-        getContentPane().add(jLabel10);
-        jLabel10.setBounds(10, 260, 210, 20);
-
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField9);
-        jTextField9.setBounds(260, 402, 187, 30);
-
         jButton4.setBackground(new java.awt.Color(204, 204, 204));
         jButton4.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
         jButton4.setText("Atras");
@@ -452,19 +427,44 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton4);
-        jButton4.setBounds(30, 440, 80, 24);
+        jButton4.setBounds(20, 50, 80, 24);
+
+        jButton3.setBackground(new java.awt.Color(204, 204, 204));
+        jButton3.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
+        jButton3.setText("Aceptar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton3);
+        jButton3.setBounds(380, 40, 90, 24);
+
+        jLabel10.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Registrar Persona");
+        getContentPane().add(jLabel10);
+        jLabel10.setBounds(10, 270, 210, 20);
+
+        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField9ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField9);
+        jTextField9.setBounds(260, 410, 187, 30);
 
         jLabel14.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Nombre");
         getContentPane().add(jLabel14);
-        jLabel14.setBounds(20, 290, 80, 17);
+        jLabel14.setBounds(20, 300, 80, 17);
 
         jLabel15.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Apellido");
         getContentPane().add(jLabel15);
-        jLabel15.setBounds(20, 320, 80, 17);
+        jLabel15.setBounds(20, 330, 80, 17);
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -475,15 +475,15 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Cedula");
         getContentPane().add(jLabel16);
-        jLabel16.setBounds(20, 350, 80, 17);
+        jLabel16.setBounds(20, 360, 80, 17);
 
         jLabel17.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Direccion");
         getContentPane().add(jLabel17);
-        jLabel17.setBounds(20, 377, 80, 20);
+        jLabel17.setBounds(20, 390, 80, 20);
         getContentPane().add(jLabel13);
-        jLabel13.setBounds(-10, -10, 580, 530);
+        jLabel13.setBounds(-10, -10, 570, 530);
         getContentPane().add(jSeparator2);
         jSeparator2.setBounds(330, 330, 80, 30);
 

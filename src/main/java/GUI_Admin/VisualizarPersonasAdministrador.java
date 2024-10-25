@@ -42,11 +42,11 @@ public class VisualizarPersonasAdministrador extends javax.swing.JFrame {
         if (osName.equals("linux")) {
             s = currentRelativePath.toAbsolutePath().toString();
            
-            pathc1 = s + "//Images//" + "Background2" + ".jpg";
+            pathc1 = s + "//Images//" + "Background" + ".jpg";
             establecerImagen();
         } else if (osName.equals("windows 11") || osName.equals("windows 10")) {
             s1 = currentRelativePath.toAbsolutePath().toString();
-            pathc1 = s1 + "\\Images\\" + "Background2" + ".jpg";
+            pathc1 = s1 + "\\Images\\" + "Background" + ".jpg";
             establecerImagen();
         }
     }

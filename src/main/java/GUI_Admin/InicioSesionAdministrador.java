@@ -11,6 +11,7 @@ import Logica_Negocio.Administrador;
 import Logica_Negocio.Cliente;
 import Logica_Negocio.Usuario;
 import java.awt.Color;
+
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+
 import javax.swing.border.LineBorder;
 
 /**
@@ -26,24 +28,26 @@ import javax.swing.border.LineBorder;
  * @author 1058932609
  */
 public class InicioSesionAdministrador extends javax.swing.JFrame {
+    
+   
 
     public String pathc;
     public String s;
 
     Usuario usuAdmin;
     Usuario usuCliente;
-    
-  
+
     public String pathc1;
-   
+
     public String s1;
-    
+
     public String osName = System.getProperty("os.name").toLowerCase();
 
     /**
      * Creates new form InicioSesionAdministrador
      */
     public InicioSesionAdministrador() {
+       
         initComponents();
         Conexion.Conectar();
         Path currentRelativePath = Paths.get("");
@@ -51,7 +55,7 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
         // Ajuste de ruta basado en el sistema operativo
         if (osName.equals("linux")) {
             s = currentRelativePath.toAbsolutePath().toString();
-           
+
             pathc1 = s + "//Images//" + "Background2" + ".jpg";
             establecerImagen();
         } else if (osName.equals("windows 11") || osName.equals("windows 10")) {
@@ -161,24 +165,24 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("INICIAR SESION");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 350, 30));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 350, 30));
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("USUARIO");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("CONTRASEÑA");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 140, 30));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 140, 30));
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
@@ -188,14 +192,14 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 330, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 350, -1, -1));
 
         jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordField1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, 140, 30));
+        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 140, 30));
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 600, 500));
 
         pack();
@@ -257,4 +261,7 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-}
+
+        }
+    
+
