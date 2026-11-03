@@ -40,8 +40,9 @@ public class Conexion {
             db = FirestoreClient.getFirestore();
             System.out.println("Conexion Exitosa");
             return true;
-        } catch (Exception e) {
-            System.out.println("Error:" + e.getMessage());
+        } catch (Exception | ExceptionInInitializerError e) {
+            // Firebase lanza un Error (no una Exception) si la red local de Java falla; sin esto la app se cierra.
+            System.out.println("Error:" + e);
             return false;
         }
     }
