@@ -12,6 +12,9 @@ import Helpers.HelperCifrado;
  */
 public abstract class Usuario {
     
+    // Usuario que inicio sesion (lo asigna InicioSesionAdministrador).
+    public static Usuario sesion;
+
     private String usu;
     // Hash SHA-256 de la contrasena; la clave en texto plano nunca se guarda.
     private String contra;

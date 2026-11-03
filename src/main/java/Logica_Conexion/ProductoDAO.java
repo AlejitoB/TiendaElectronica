@@ -1,5 +1,7 @@
 package Logica_Conexion;
 
+import Logica_Negocio.Carrito;
+import Logica_Negocio.Pedido;
 import Logica_Negocio.Producto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +29,7 @@ public class ProductoDAO implements DAOInterfaceProducto {
                         + "Categoria VARCHAR(60) NOT NULL, Precio BIGINT NOT NULL, Stock INT NOT NULL)");
                 st.executeUpdate("CREATE TABLE IF NOT EXISTS pedido ("
                         + "Id VARCHAR(40) PRIMARY KEY, Fecha VARCHAR(30) NOT NULL, Cliente VARCHAR(60) NOT NULL,"
-                        + "Total BIGINT NOT NULL, Tarjeta VARCHAR(30) NOT NULL, Detalle TEXT NOT NULL)");
+                        + "Total BIGINT NOT NULL, Tarjeta VARCHAR(30) NOT NULL, Autorizacion VARCHAR(12) NOT NULL, Detalle TEXT NOT NULL)");
             }
             tablasListas = true;
         }
@@ -82,6 +84,42 @@ public class ProductoDAO implements DAOInterfaceProducto {
         try (PreparedStatement ps = conexion().prepareStatement("DELETE FROM producto WHERE Serial = ?")) {
             ps.setString(1, serial);
             return ps.executeUpdate() > 0;
+        }
+    }
+
+    @Override
+    public void registrarVenta(Pedido pedido) throws Exception {
+        Connection con = conexion();
+        con.setAutoCommit(false);
+        try {
+            try (PreparedStatement ps = con.prepareStatement(
+                    "UPDATE producto SET Stock = Stock - ? WHERE Serial = ? AND Stock >= ?")) {
+                for (Carrito.Item i : pedido.items) {
+                    ps.setInt(1, i.cantidad);
+                    ps.setString(2, i.producto.getSerial());
+                    ps.setInt(3, i.cantidad);
+                    if (ps.executeUpdate() != 1) {
+                        throw new IllegalStateException("Stock insuficiente para " + i.producto.getNombre());
+                    }
+                }
+            }
+            try (PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO pedido (Id, Fecha, Cliente, Total, Tarjeta, Autorizacion, Detalle) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
+                ps.setString(1, pedido.id);
+                ps.setString(2, pedido.fecha);
+                ps.setString(3, pedido.cliente);
+                ps.setLong(4, pedido.total);
+                ps.setString(5, pedido.tarjeta);
+                ps.setString(6, pedido.autorizacion);
+                ps.setString(7, pedido.Detalle());
+                ps.executeUpdate();
+            }
+            con.commit();
+        } catch (Exception e) {
+            con.rollback();
+            throw e;
+        } finally {
+            con.setAutoCommit(true);
         }
     }
 }

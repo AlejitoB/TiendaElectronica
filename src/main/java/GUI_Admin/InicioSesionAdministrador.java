@@ -106,6 +106,7 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
 
         if (usuAdmin.LogOn(cifrarusu, cifrarcontra)) {
             intentos.Reiniciar();
+            Usuario.sesion = usuAdmin;
             JOptionPane.showMessageDialog(this, "Bienvenido Administrador");
             if (Conexion.modoNube) {
                 new MenuAdministrador().setVisible(true);
@@ -115,6 +116,7 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
             dispose();
         } else if (usuCliente.LogOn(cifrarusu, cifrarcontra)) {
             intentos.Reiniciar();
+            Usuario.sesion = usuCliente;
             JOptionPane.showMessageDialog(this, "Bienvenido Cliente");
             new MenuCliente().setVisible(true);
             dispose();

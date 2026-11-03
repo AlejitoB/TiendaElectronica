@@ -1,5 +1,6 @@
 package Logica_Conexion;
 
+import Logica_Negocio.Pedido;
 import Logica_Negocio.Producto;
 import java.util.ArrayList;
 
@@ -17,6 +18,12 @@ public interface DAOInterfaceProducto {
     public void guardar(Producto p) throws Exception;
 
     public boolean eliminar(String serial) throws Exception;
+
+    /**
+     * Descuenta el stock de cada articulo y guarda el pedido en una sola transaccion:
+     * si algun articulo no alcanza, no se descuenta nada (0 registros a medias).
+     */
+    public void registrarVenta(Pedido pedido) throws Exception;
 
     /** Implementacion segun la base elegida en EscogerBD. */
     public static DAOInterfaceProducto Actual() {
