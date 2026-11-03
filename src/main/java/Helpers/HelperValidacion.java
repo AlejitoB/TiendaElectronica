@@ -261,6 +261,32 @@ public class HelperValidacion {
         return conteo;
     }
     
+
+    /**
+     * Valida un producto del inventario. Devuelve null si es valido o un mensaje
+     * que nombra el campo y el tipo de error (criterio de usabilidad).
+     */
+    public static String ValidarProducto(Logica_Negocio.Producto p) {
+        if (p.getSerial() == null || !p.getSerial().matches("[A-Za-z0-9-]{3,20}")) {
+            return "Campo serial: use de 3 a 20 letras, numeros o guiones";
+        }
+        if (p.getNombre() == null || p.getNombre().isBlank() || p.getNombre().length() > 120) {
+            return "Campo nombre: es obligatorio (maximo 120 caracteres)";
+        }
+        if (p.getMarca() == null || p.getMarca().isBlank() || RetornarCEV2(p.getMarca()) > 0) {
+            return "Campo marca: es obligatorio y no admite caracteres especiales";
+        }
+        if (p.getCategoria() == null || p.getCategoria().isBlank()) {
+            return "Campo categoria: es obligatorio";
+        }
+        if (p.getPrecio() <= 0) {
+            return "Campo precio: debe ser un numero mayor que cero";
+        }
+        if (p.getStock() < 0 || p.getStock() > 99999) {
+            return "Campo stock: debe estar entre 0 y 99999";
+        }
+        return null;
+    }
 }
     
     
