@@ -17,7 +17,8 @@ public class Pedido {
     public final List<Carrito.Item> items;
     public final long total;
     public final String tarjeta;
-    public final String autorizacion;
+    // La asigna la pasarela al aprobar; el id del pedido es la referencia que se envia a Wompi.
+    public String autorizacion;
 
     public Pedido(String cliente, Carrito carrito, String tarjeta, String autorizacion) {
         this.id = "PED-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();

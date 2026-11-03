@@ -4,8 +4,10 @@ import Helpers.HelperAuditoria;
 import Helpers.HelperPago;
 import Helpers.HelperUI;
 import Logica_Conexion.DAOInterfaceProducto;
+import Logica_Conexion.PasarelaWompi;
 import Logica_Negocio.Carrito;
 import Logica_Negocio.Pedido;
+import Logica_Negocio.Producto;
 import Logica_Negocio.Usuario;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -44,6 +46,7 @@ public class PasarelaPago extends JDialog {
     private Pedido pedido;
 
     private final JTextField txtTitular = new JTextField(22);
+    private final JTextField txtCorreo = new JTextField(22);
     private final JTextField txtNumero = new JTextField(22);
     private final JTextField txtVence = new JTextField(6);
     private final JPasswordField txtCvv = new JPasswordField(4);
@@ -71,7 +74,9 @@ public class PasarelaPago extends JDialog {
 
         JPanel cabecera = new JPanel(new BorderLayout());
         cabecera.add(HelperUI.Titulo("Pago seguro con tarjeta"), BorderLayout.NORTH);
-        cabecera.add(HelperUI.Subtitulo("Pasarela simulada: no se realiza ningún cobro real."), BorderLayout.SOUTH);
+        cabecera.add(HelperUI.Subtitulo(PasarelaWompi.Configurada()
+                ? "Procesado por Wompi (ambiente Sandbox): no se realiza ningún cobro real."
+                : "Pasarela simulada: no se realiza ningún cobro real."), BorderLayout.SOUTH);
         raiz.add(cabecera, BorderLayout.NORTH);
         raiz.add(resumen(), BorderLayout.WEST);
         raiz.add(formulario(), BorderLayout.CENTER);
@@ -107,7 +112,7 @@ public class PasarelaPago extends JDialog {
         detalle.setOpaque(false);
         JScrollPane scroll = new JScrollPane(detalle);
         scroll.setBorder(null);
-        scroll.setPreferredSize(new Dimension(320, 220));
+        scroll.setPreferredSize(new Dimension(320, 300));
         panel.add(scroll, BorderLayout.CENTER);
         JLabel total = new JLabel("Total a pagar: " + HelperUI.Moneda(carrito.Total()));
         total.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -120,6 +125,7 @@ public class PasarelaPago extends JDialog {
         form.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createTitledBorder("Datos de la tarjeta"), BorderFactory.createEmptyBorder(6, 10, 8, 10)));
         txtTitular.putClientProperty("JTextField.placeholderText", "Como aparece en la tarjeta");
+        txtCorreo.putClientProperty("JTextField.placeholderText", "Para el comprobante de pago");
         txtNumero.putClientProperty("JTextField.placeholderText", "0000 0000 0000 0000");
         txtVence.putClientProperty("JTextField.placeholderText", "MM/AA");
         txtCvv.putClientProperty("JTextField.placeholderText", "123");
@@ -138,21 +144,23 @@ public class PasarelaPago extends JDialog {
         g.weightx = 1;
         poner(form, g, 0, 0, 2, new JLabel("Titular"));
         poner(form, g, 0, 1, 2, txtTitular);
-        poner(form, g, 0, 2, 1, new JLabel("Número de tarjeta"));
+        poner(form, g, 0, 2, 2, new JLabel("Correo electrónico"));
+        poner(form, g, 0, 3, 2, txtCorreo);
+        poner(form, g, 0, 4, 1, new JLabel("Número de tarjeta"));
         lblFranquicia.setHorizontalAlignment(JLabel.RIGHT);
-        poner(form, g, 1, 2, 1, lblFranquicia);
-        poner(form, g, 0, 3, 2, txtNumero);
-        poner(form, g, 0, 4, 1, new JLabel("Vencimiento (MM/AA)"));
-        poner(form, g, 1, 4, 1, new JLabel("CVV"));
-        poner(form, g, 0, 5, 1, txtVence);
-        poner(form, g, 1, 5, 1, txtCvv);
+        poner(form, g, 1, 4, 1, lblFranquicia);
+        poner(form, g, 0, 5, 2, txtNumero);
+        poner(form, g, 0, 6, 1, new JLabel("Vencimiento (MM/AA)"));
+        poner(form, g, 1, 6, 1, new JLabel("CVV"));
+        poner(form, g, 0, 7, 1, txtVence);
+        poner(form, g, 1, 7, 1, txtCvv);
         g.insets = new Insets(14, 0, 0, 8);
-        poner(form, g, 0, 6, 2, HelperUI.Subtitulo("Tarjetas de prueba: " + HelperPago.TARJETA_APROBADA + " (aprobada)"));
+        poner(form, g, 0, 8, 2, HelperUI.Subtitulo("Tarjetas de prueba: " + HelperPago.TARJETA_APROBADA + " (aprobada)"));
         g.insets = new Insets(2, 0, 0, 8);
-        poner(form, g, 0, 7, 2, HelperUI.Subtitulo("y " + HelperPago.TARJETA_RECHAZADA + " (rechazada)."));
+        poner(form, g, 0, 9, 2, HelperUI.Subtitulo("y " + HelperPago.TARJETA_RECHAZADA + " (rechazada)."));
         g.weighty = 1;
         g.anchor = GridBagConstraints.NORTHWEST;
-        poner(form, g, 0, 8, 2, HelperUI.Subtitulo("Solo se guarda la franquicia y los últimos 4 dígitos."));
+        poner(form, g, 0, 10, 2, HelperUI.Subtitulo("Solo se guarda la franquicia y los últimos 4 dígitos."));
         form.setPreferredSize(new Dimension(360, 0));
         return form;
     }
@@ -169,9 +177,12 @@ public class PasarelaPago extends JDialog {
     }
 
     private void pagar() {
-        String numero = txtNumero.getText();
-        String error = HelperPago.Validar(txtTitular.getText(), numero, txtVence.getText(),
-                String.valueOf(txtCvv.getPassword()), YearMonth.now());
+        String numero = HelperPago.SoloDigitos(txtNumero.getText());
+        String titular = txtTitular.getText().trim();
+        String correo = txtCorreo.getText().trim();
+        String vence = txtVence.getText().trim();
+        String cvv = String.valueOf(txtCvv.getPassword());
+        String error = HelperPago.Validar(titular, correo, numero, vence, cvv, YearMonth.now());
         if (error != null) {
             JOptionPane.showMessageDialog(this, error, "Revise los datos de pago", JOptionPane.WARNING_MESSAGE);
             return;
@@ -181,18 +192,33 @@ public class PasarelaPago extends JDialog {
         new SwingWorker<Pedido, Void>() {
             @Override
             protected Pedido doInBackground() throws Exception {
-                Thread.sleep(1500); // simula la espera de respuesta del banco
-                String autorizacion = HelperPago.Autorizar(numero);
-                if (autorizacion == null) {
-                    throw new IllegalStateException("Transacción rechazada por el banco: fondos insuficientes.");
+                // Antes de cobrar se revisa el stock, para no cobrar por articulos que ya se agotaron.
+                for (Carrito.Item i : carrito.Items()) {
+                    Producto actual = dao.buscar(i.producto.getSerial());
+                    if (actual == null || actual.getStock() < i.cantidad) {
+                        throw new IllegalStateException("Stock insuficiente para " + i.producto.getNombre()
+                                + ". No se realizó ningún cobro.");
+                    }
                 }
-                Pedido p = new Pedido(cliente, carrito, HelperPago.Enmascarar(numero), autorizacion);
+                Pedido p = new Pedido(cliente, carrito, HelperPago.Enmascarar(numero), null);
+                if (PasarelaWompi.Configurada()) {
+                    String[] mmaa = vence.split("/");
+                    p.autorizacion = PasarelaWompi.Cobrar(titular, numero, mmaa[0], mmaa[1], cvv, correo, p.id, p.total);
+                } else {
+                    Thread.sleep(1500); // simula la espera de respuesta del banco
+                    p.autorizacion = HelperPago.Autorizar(numero);
+                    if (p.autorizacion == null) {
+                        throw new IllegalStateException("Transacción rechazada por el banco: fondos insuficientes.");
+                    }
+                }
                 try {
                     dao.registrarVenta(p);
-                    HelperAuditoria.Registrar("VENTA", p.id + " total=" + p.total + " tarjeta=" + p.tarjeta + " " + p.Detalle());
+                    HelperAuditoria.Registrar("VENTA", p.id + " total=" + p.total + " tarjeta=" + p.tarjeta
+                            + " autorizacion=" + p.autorizacion + " " + p.Detalle());
                 } catch (Exception ex) {
-                    throw new IllegalStateException("El pago fue reversado porque no se pudo registrar el pedido: "
-                            + causa(ex), ex);
+                    HelperAuditoria.Registrar("VENTA_SIN_REGISTRAR", p.id + " autorizacion=" + p.autorizacion + " " + causa(ex));
+                    throw new IllegalStateException("El pago " + p.autorizacion + " fue aprobado pero no se pudo registrar el pedido ("
+                            + causa(ex) + "). Quedó en la auditoría para que el administrador lo revise.", ex);
                 }
                 return p;
             }
@@ -219,7 +245,7 @@ public class PasarelaPago extends JDialog {
         progreso.setString(si ? "Procesando pago..." : "");
         btnPagar.setEnabled(!si);
         btnCancelar.setEnabled(!si);
-        for (JTextField t : new JTextField[]{txtTitular, txtNumero, txtVence, txtCvv}) {
+        for (JTextField t : new JTextField[]{txtTitular, txtCorreo, txtNumero, txtVence, txtCvv}) {
             t.setEnabled(!si);
         }
         revalidate();

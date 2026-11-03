@@ -4,13 +4,13 @@ import java.time.YearMonth;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Reglas de la pasarela de pagos simulada. No se conecta a ningun banco:
- * la tarjeta terminada en 0002 simula un rechazo y cualquier otra valida se aprueba.
+ * Reglas de la pasarela de pagos. Las tarjetas de prueba son las mismas del Sandbox de Wompi,
+ * asi funcionan igual con Wompi configurado o con la simulacion local.
  */
 public class HelperPago {
 
-    public static final String TARJETA_APROBADA = "4111 1111 1111 1111";
-    public static final String TARJETA_RECHAZADA = "4000 0000 0000 0002";
+    public static final String TARJETA_APROBADA = "4242 4242 4242 4242";
+    public static final String TARJETA_RECHAZADA = "4111 1111 1111 1111";
 
     public static String SoloDigitos(String numero) {
         return numero == null ? "" : numero.replaceAll("[\\s-]", "");
@@ -52,9 +52,12 @@ public class HelperPago {
      * Valida los datos de la tarjeta. Devuelve null si son validos o un mensaje
      * que nombra el campo y el tipo de error.
      */
-    public static String Validar(String titular, String numero, String vencimiento, String cvv, YearMonth hoy) {
+    public static String Validar(String titular, String correo, String numero, String vencimiento, String cvv, YearMonth hoy) {
         if (titular == null || !titular.trim().matches("[\\p{L} ]{3,60}")) {
             return "Campo titular: escriba el nombre como aparece en la tarjeta (solo letras)";
+        }
+        if (correo == null || !correo.trim().matches("[^@\\s]+@[^@\\s]+\\.[^@\\s]+")) {
+            return "Campo correo: escriba un correo valido para enviar el comprobante";
         }
         String n = SoloDigitos(numero);
         if (!n.matches("\\d{13,19}") || !Luhn(n)) {
@@ -85,10 +88,11 @@ public class HelperPago {
     }
 
     /**
-     * Simula la respuesta del banco. Devuelve el codigo de autorizacion o null si es rechazada.
+     * Simula la respuesta del banco cuando Wompi no esta configurado.
+     * Devuelve el codigo de autorizacion o null si es rechazada.
      */
     public static String Autorizar(String numero) {
-        if (SoloDigitos(numero).endsWith("0002")) {
+        if (SoloDigitos(numero).equals(SoloDigitos(TARJETA_RECHAZADA))) {
             return null;
         }
         return String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));

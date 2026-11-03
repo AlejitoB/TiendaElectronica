@@ -36,14 +36,18 @@ Flujo: **Portada → Escoger base (Nube / Local) → Inicio de sesión**. El adm
 | Administrador | CRUD de clientes, **Inventario** (crear, editar, eliminar, buscar, stock bajo) |
 | Cliente | **Ir a la Tienda**: catálogo, carrito y pago |
 
-### Pasarela de pagos (simulada)
+### Pasarela de pagos (Wompi Sandbox o simulada)
 
-No se conecta a ningún banco ni realiza cobros. Valida titular, número (algoritmo de Luhn), vencimiento `MM/AA` y CVV.
+Con `wompi.llave.publica` y `wompi.secreto.integridad` en `config.properties`, el pago se procesa en el **ambiente Sandbox de Wompi** (Bancolombia): tokeniza la tarjeta, crea la transacción con firma de integridad y espera su estado final. Sin esas llaves, la app usa una simulación local con las mismas reglas. En ningún caso se cobra dinero real.
 
-| Tarjeta de prueba | Resultado |
+Las llaves se obtienen gratis en [comercios.wompi.co](https://comercios.wompi.co) → Desarrolladores, en modo **Sandbox** (`pub_test_...` y `test_integrity_...`).
+
+Antes de cobrar se valida titular, correo, número (algoritmo de Luhn), vencimiento `MM/AA`, CVV y el stock disponible.
+
+| Tarjeta de prueba (Sandbox de Wompi) | Resultado |
 |-------------------|-----------|
-| `4111 1111 1111 1111` | Aprobada |
-| `4000 0000 0000 0002` | Rechazada (fondos insuficientes) |
+| `4242 4242 4242 4242` | Aprobada |
+| `4111 1111 1111 1111` | Rechazada |
 
 Al aprobarse, el stock se descuenta y el pedido se guarda **en una sola transacción**: si un artículo ya no alcanza, no se descuenta nada. De la tarjeta solo se guarda la franquicia y los últimos 4 dígitos.
 

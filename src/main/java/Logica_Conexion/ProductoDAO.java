@@ -29,7 +29,7 @@ public class ProductoDAO implements DAOInterfaceProducto {
                         + "Categoria VARCHAR(60) NOT NULL, Precio BIGINT NOT NULL, Stock INT NOT NULL)");
                 st.executeUpdate("CREATE TABLE IF NOT EXISTS pedido ("
                         + "Id VARCHAR(40) PRIMARY KEY, Fecha VARCHAR(30) NOT NULL, Cliente VARCHAR(60) NOT NULL,"
-                        + "Total BIGINT NOT NULL, Tarjeta VARCHAR(30) NOT NULL, Autorizacion VARCHAR(12) NOT NULL, Detalle TEXT NOT NULL)");
+                        + "Total BIGINT NOT NULL, Tarjeta VARCHAR(30) NOT NULL, Autorizacion VARCHAR(40) NOT NULL, Detalle TEXT NOT NULL)");
             }
             tablasListas = true;
         }
