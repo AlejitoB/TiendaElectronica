@@ -5,6 +5,7 @@
 package GUI_Local;
 
 import GUI_Admin.InicioSesionAdministrador;
+import Logica_Conexion.Conexion;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -108,14 +110,23 @@ public class EscogerBD extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       InicioSesionAdministrador admin = new InicioSesionAdministrador();
-       admin.setVisible(true);
-       dispose();
+        Conexion.modoNube = Conexion.Conectar();
+        if (!Conexion.modoNube) {
+            // Fiabilidad: si la nube no responde se continua con la base local.
+            int op = JOptionPane.showConfirmDialog(this, "No fue posible conectar con Firebase.\n¿Desea continuar con la base de datos local?",
+                    "Nube no disponible", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (op != JOptionPane.YES_OPTION) {
+                return;
+            }
+        }
+        new InicioSesionAdministrador().setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        MenuLocal men= new MenuLocal();
-        men.setVisible(true);
+        // Seguridad: el modo local tambien exige inicio de sesion.
+        Conexion.modoNube = false;
+        new InicioSesionAdministrador().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
