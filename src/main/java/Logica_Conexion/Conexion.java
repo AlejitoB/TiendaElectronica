@@ -27,6 +27,14 @@ public class Conexion {
     // true = Firebase (nube), false = MySQL (local). Lo decide EscogerBD.
     public static boolean modoNube = true;
 
+    static {
+        // Java en Windows abre sockets internos en la carpeta temporal; en algunos equipos AppData\Local los bloquea
+        // ("Unable to establish loopback connection") y Firebase/Wompi no arrancan. La carpeta del usuario si funciona.
+        if (System.getProperty("jdk.net.unixdomain.tmpdir") == null) {
+            System.setProperty("jdk.net.unixdomain.tmpdir", System.getProperty("user.home"));
+        }
+    }
+
     public static boolean Conectar() {
         if (db != null) {
             return true;
