@@ -5,10 +5,13 @@
 package GUI_Admin;
 
 import GUI_Cliente.MenuCliente;
+import GUI_Local.MenuLocal;
 import Helpers.HelperCifrado;
+import Helpers.HelperConfig;
 import Logica_Conexion.Conexion;
 import Logica_Negocio.Administrador;
 import Logica_Negocio.Cliente;
+import Logica_Negocio.ControlIntentos;
 import Logica_Negocio.Usuario;
 import java.awt.Color;
 
@@ -20,6 +23,7 @@ import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 import javax.swing.border.LineBorder;
 
@@ -36,6 +40,7 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
 
     Usuario usuAdmin;
     Usuario usuCliente;
+    private final ControlIntentos intentos = new ControlIntentos();
 
     public String pathc1;
 
@@ -49,7 +54,6 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
     public InicioSesionAdministrador() {
        
         initComponents();
-        Conexion.Conectar();
         Path currentRelativePath = Paths.get("");
         s = currentRelativePath.toAbsolutePath().toString();
         // Ajuste de ruta basado en el sistema operativo
@@ -73,66 +77,69 @@ public class InicioSesionAdministrador extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     public void InicioSesion() {
 
-        int res, res1;
-        String usuario = jTextField1.getText();
-        String contraseña = String.valueOf(jPasswordField1.getPassword());
-
-        res = Helpers.HelperValidacion.ValidarTodo(usuario);
-        res1 = Helpers.HelperValidacion.ValidarTodoContraseña(contraseña);
-
-        if (res == 0 && res1 == 0) {
-
-            String cifrarusu = HelperCifrado.CifrarSHA256(usuario);
-            String cifrarcontra = HelperCifrado.CifrarSHA256(contraseña);
-
-            System.out.println("usu ci inter" + "\t" + cifrarusu);
-            System.out.println("usu con inter" + "\t" + cifrarcontra);
-            System.out.println("Usu" + cifrarusu);
-
-            if (usuario.equals("Admin")) {
-                usuAdmin = new Administrador("Admin", "12345");
-            } else if (usuario.equals("Cliente")) {
-                usuCliente = new Cliente("Cliente", "12345");
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuario o contraseña invalida");
-                jTextField1.setBorder(new LineBorder(Color.RED, 2));
-                jPasswordField1.setBorder(new LineBorder(Color.RED, 2));
-            }
-
-            if (usuCliente instanceof Cliente) {
-                boolean rta1 = usuCliente.LogOn(cifrarusu, cifrarcontra);
-
-                if (rta1) {
-                    JOptionPane.showMessageDialog(null, "Bienvenido Cliente");
-                    MenuCliente menu = new MenuCliente();
-                    menu.setVisible(true);
-                    dispose();
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Usuario o contraseña invalida");
-                }
-            } else if (usuAdmin instanceof Administrador) {
-
-//            Usuario usuAdmin = new Administrador("Admin", "12345");
-                boolean rta = usuAdmin.LogOn(cifrarusu, cifrarcontra);
-
-                if (rta) {
-                    JOptionPane.showMessageDialog(null, "Bienvenido Administrador");
-                    MenuAdministrador menu = new MenuAdministrador();
-                    menu.setVisible(true);
-                    dispose();
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Usuario o contraseña invalida");
-                }
-            }
-        } else {
-
-            jTextField1.setBorder(new LineBorder(Color.RED, 2));
-            jPasswordField1.setBorder(new LineBorder(Color.RED, 2));
-
+        if (intentos.EstaBloqueado()) {
+            JOptionPane.showMessageDialog(this, "Acceso bloqueado temporalmente por " + ControlIntentos.MAX_INTENTOS
+                    + " intentos fallidos. Espere un minuto.", "Inicio de sesion", JOptionPane.WARNING_MESSAGE);
+            return;
         }
 
+        String usuario = jTextField1.getText().trim();
+        String contraseña = String.valueOf(jPasswordField1.getPassword());
+
+        int res = Helpers.HelperValidacion.ValidarTodo(usuario);
+        int res1 = Helpers.HelperValidacion.ValidarTodoContraseña(contraseña);
+
+        if (res != 0 || res1 != 0) {
+            jTextField1.setBorder(new LineBorder(res != 0 ? Color.RED : Color.GRAY, 2));
+            jPasswordField1.setBorder(new LineBorder(res1 != 0 ? Color.RED : Color.GRAY, 2));
+            JOptionPane.showMessageDialog(this, res != 0
+                    ? "Campo usuario: no puede estar vacio ni tener numeros o caracteres especiales"
+                    : "Campo contraseña: no puede estar vacio ni tener . - /", "Inicio de sesion", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String cifrarusu = HelperCifrado.CifrarSHA256(usuario);
+        String cifrarcontra = HelperCifrado.CifrarSHA256(contraseña);
+
+        usuAdmin = new Administrador(HelperConfig.Obtener("admin.usuario"), HelperConfig.Obtener("admin.clave.sha256"));
+        usuCliente = new Cliente(HelperConfig.Obtener("cliente.usuario"), HelperConfig.Obtener("cliente.clave.sha256"));
+
+        if (usuAdmin.LogOn(cifrarusu, cifrarcontra)) {
+            intentos.Reiniciar();
+            Usuario.sesion = usuAdmin;
+            JOptionPane.showMessageDialog(this, "Bienvenido Administrador");
+            if (Conexion.modoNube) {
+                new MenuAdministrador().setVisible(true);
+            } else {
+                new MenuLocal().setVisible(true);
+            }
+            dispose();
+        } else if (usuCliente.LogOn(cifrarusu, cifrarcontra)) {
+            intentos.Reiniciar();
+            Usuario.sesion = usuCliente;
+            JOptionPane.showMessageDialog(this, "Bienvenido Cliente");
+            new MenuCliente().setVisible(true);
+            dispose();
+        } else {
+            // Mensaje generico: no revela si fallo el usuario o la contraseña.
+            jTextField1.setBorder(new LineBorder(Color.RED, 2));
+            jPasswordField1.setBorder(new LineBorder(Color.RED, 2));
+            jPasswordField1.setText("");
+            if (intentos.RegistrarFallo()) {
+                jButton1.setEnabled(false);
+                Timer desbloqueo = new Timer(60_000, e -> {
+                    intentos.Reiniciar();
+                    jButton1.setEnabled(true);
+                });
+                desbloqueo.setRepeats(false);
+                desbloqueo.start();
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña invalida. Acceso bloqueado por 1 minuto.",
+                        "Inicio de sesion", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña invalida. Intentos restantes: "
+                        + intentos.IntentosRestantes(), "Inicio de sesion", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     public void establecerImagen() {
