@@ -1,5 +1,6 @@
 package GUI_Cliente;
 
+import Helpers.HelperAuditoria;
 import Helpers.HelperPago;
 import Helpers.HelperUI;
 import Logica_Conexion.DAOInterfaceProducto;
@@ -188,6 +189,7 @@ public class PasarelaPago extends JDialog {
                 Pedido p = new Pedido(cliente, carrito, HelperPago.Enmascarar(numero), autorizacion);
                 try {
                     dao.registrarVenta(p);
+                    HelperAuditoria.Registrar("VENTA", p.id + " total=" + p.total + " tarjeta=" + p.tarjeta + " " + p.Detalle());
                 } catch (Exception ex) {
                     throw new IllegalStateException("El pago fue reversado porque no se pudo registrar el pedido: "
                             + causa(ex), ex);

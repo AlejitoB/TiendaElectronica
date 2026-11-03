@@ -1,6 +1,7 @@
 package GUI_Admin;
 
 import GUI_Local.MenuLocal;
+import Helpers.HelperAuditoria;
 import Helpers.HelperUI;
 import Helpers.HelperValidacion;
 import Logica_Conexion.Conexion;
@@ -280,6 +281,8 @@ public class InventarioAdministrador extends JFrame {
                 throw new IllegalStateException("Ya existe un producto con el serial " + p.getSerial());
             }
             dao.guardar(p);
+            HelperAuditoria.Registrar(nuevo ? "CREAR_PRODUCTO" : "ACTUALIZAR_PRODUCTO", "Serial=" + p.getSerial()
+                    + " precio=" + p.getPrecio() + " stock=" + p.getStock());
         }, nuevo ? "Producto creado" : "Producto actualizado");
     }
 
@@ -297,6 +300,7 @@ public class InventarioAdministrador extends JFrame {
                 if (!dao.eliminar(serial)) {
                     throw new IllegalStateException("El producto " + serial + " ya no existe");
                 }
+                HelperAuditoria.Registrar("ELIMINAR_PRODUCTO", "Serial=" + serial);
             }, "Producto eliminado");
         }
     }

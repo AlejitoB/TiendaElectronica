@@ -140,10 +140,16 @@ public class EliminarPersonaAdministrador extends javax.swing.JFrame {
 
         String uid = jTextField1.getText();
         
+        // Seguridad: confirmacion adicional para evitar eliminaciones accidentales.
+        if (JOptionPane.showConfirmDialog(this, "¿Eliminar definitivamente al cliente con uid " + uid + "?",
+                "Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != JOptionPane.YES_OPTION) {
+            return;
+        }
         res = PersonaProvider.EliminarPersona("Persona", uid);
         if(res==true)
         {
             jTextPane1.setText("Cliente eliminado");
+            Helpers.HelperAuditoria.Registrar("ELIMINAR_CLIENTE", "Uid=" + uid + " base=nube");
         }else
         {
             JOptionPane.showMessageDialog(null, "Cliente no encontrado");

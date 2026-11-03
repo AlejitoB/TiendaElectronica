@@ -217,9 +217,11 @@ public class EditarPersona extends javax.swing.JFrame {
             per = new Persona(uid, nombre, apellido, direccion, cedula, producto, nombreimg);
             PersonaDAO dao = new PersonaDAO();
             dao.update(per);
+            Helpers.HelperAuditoria.Registrar("ACTUALIZAR_CLIENTE", "Uid=" + uid + " base=local");
             JOptionPane.showMessageDialog(null, "Actualizar Exitoso");
         } catch (Exception e) {
             System.out.println("Excepcion" + e);
+            JOptionPane.showMessageDialog(null, "No se pudo actualizar el cliente: " + e.getMessage());
         }
            }
         else{
