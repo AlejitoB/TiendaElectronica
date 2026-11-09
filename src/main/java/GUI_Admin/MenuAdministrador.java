@@ -129,7 +129,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
         getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 160, 30));
 
         jButton5.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
-        jButton5.setText("SALIR");
+        jButton5.setText("Salir");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
