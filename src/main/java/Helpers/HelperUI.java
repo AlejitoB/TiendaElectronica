@@ -8,8 +8,14 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Map;
@@ -17,6 +23,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.plaf.UIResource;
@@ -30,7 +37,7 @@ public class HelperUI {
     public static final Color ACENTO = new Color(0x2563EB);
     public static final Color EXITO = new Color(0x16A34A);
     public static final Color ALERTA = new Color(0xDC2626);
-    public static final String TITULO_APP = "Tienda Electrónica";
+    public static final String TITULO_APP = "Tech Shop";
 
     private static final NumberFormat MONEDA = NumberFormat.getCurrencyInstance(Locale.forLanguageTag("es-CO"));
 
@@ -53,13 +60,72 @@ public class HelperUI {
         Toolkit.getDefaultToolkit().addAWTEventListener(e -> {
             if (e.getID() == WindowEvent.WINDOW_OPENED && e.getSource() instanceof JFrame) {
                 JFrame frame = (JFrame) e.getSource();
-                if (frame.getTitle() == null || frame.getTitle().isEmpty()) {
+                String titulo = TITULOS.get(frame.getClass().getSimpleName());
+                if (titulo != null) {
+                    frame.setTitle(TITULO_APP + " - " + titulo);
+                } else if (frame.getTitle() == null || frame.getTitle().isEmpty()) {
                     frame.setTitle(TITULO_APP);
                 }
+                frame.setIconImage(ICONO);
                 Unificar(frame.getContentPane());
                 frame.setLocationRelativeTo(null);
+                ConfirmarCierre(frame);
             }
         }, AWTEvent.WINDOW_EVENT_MASK);
+    }
+
+    // Titulos de las pantallas de NetBeans: varios estaban vacios o copiados de otra pantalla.
+    private static final Map<String, String> TITULOS = Map.ofEntries(
+            Map.entry("Portada", "Bienvenido"),
+            Map.entry("EscogerBD", "Elegir base de datos"),
+            Map.entry("InicioSesionAdministrador", "Iniciar sesión"),
+            Map.entry("MenuAdministrador", "Menú administrador"),
+            Map.entry("MenuCliente", "Menú cliente"),
+            Map.entry("MenuLocal", "Menú local"),
+            Map.entry("RegistrarPersonaAdministrador", "Registrar persona"),
+            Map.entry("VisualizarPersonasAdministrador", "Ver personas"),
+            Map.entry("BuscarPersonaAdministrador", "Buscar persona"),
+            Map.entry("EliminarPersonaAdministrador", "Eliminar persona"),
+            Map.entry("BuscarPersonaCliente", "Buscar persona"),
+            Map.entry("RegistarBDLocal", "Registrar persona (local)"),
+            Map.entry("MostrarPersonaLocal", "Ver personas (local)"),
+            Map.entry("BuscarPersonaLocal", "Buscar persona (local)"),
+            Map.entry("EditarPersona", "Editar persona (local)"),
+            Map.entry("EliminarPersona", "Eliminar persona (local)"));
+
+    /** Icono de la barra de tareas: cuadro azul redondeado con "TS" (Tech Shop). */
+    private static final Image ICONO = CrearIcono();
+
+    private static Image CrearIcono() {
+        BufferedImage img = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = img.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g.setColor(ACENTO);
+        g.fillRoundRect(0, 0, 64, 64, 18, 18);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        FontMetrics fm = g.getFontMetrics();
+        g.drawString("TS", (64 - fm.stringWidth("TS")) / 2, (64 - fm.getHeight()) / 2 + fm.getAscent());
+        g.dispose();
+        return img;
+    }
+
+    /** La X ya no cierra la aplicacion de golpe: pregunta antes, para no perder lo que se estaba haciendo. */
+    private static void ConfirmarCierre(JFrame frame) {
+        if (frame.getDefaultCloseOperation() != JFrame.EXIT_ON_CLOSE) {
+            return;
+        }
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if (JOptionPane.showConfirmDialog(frame, "¿Desea salir de " + TITULO_APP + "?", "Salir",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
     }
 
     private static void Unificar(Container cont) {

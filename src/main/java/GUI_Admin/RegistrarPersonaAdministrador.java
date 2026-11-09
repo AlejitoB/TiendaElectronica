@@ -420,7 +420,7 @@ public class RegistrarPersonaAdministrador extends javax.swing.JFrame {
 
         jButton4.setBackground(new java.awt.Color(204, 204, 204));
         jButton4.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
-        jButton4.setText("Atras");
+        jButton4.setText("Volver");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);

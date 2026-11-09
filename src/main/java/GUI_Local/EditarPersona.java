@@ -179,7 +179,7 @@ public class EditarPersona extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(0, 0, 255));
         jButton3.setFont(new java.awt.Font("Roboto Black", 1, 12)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("SALIR");
+        jButton3.setText("Volver");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
