@@ -1,1 +1,6 @@
 /target/
+# Credenciales y configuracion local: nunca al repositorio
+tienda-electronica.json
+*-firebase-adminsdk-*.json
+config.properties
+auditoria.log
