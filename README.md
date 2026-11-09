@@ -73,4 +73,4 @@ Al aprobarse, el stock se descuenta y el pedido se guarda **en una sola transacc
 | Mantenibilidad | 19 pruebas unitarias (JUnit 5) sobre validación, pagos, carrito, login y auditoría |
 | Portabilidad | `firebase-admin` 9.11.0 y `mysql-connector-j` 9.4.0; clase principal corregida |
 
-> **Importante:** la llave de Firebase estuvo publicada en el historial de git. Debe **revocarse** en la consola de Firebase (Cuentas de servicio) y generarse una nueva.
+> **Importante:** la llave de Firebase anterior estuvo publicada en el historial de git y Google la desactivó. El proyecto usa ahora un proyecto de Firebase nuevo; su llave (`tienda-electronica.json`) se comparte por privado y nunca se sube al repositorio. Se genera en la consola de Firebase → Configuración del proyecto → Cuentas de servicio → *Generar nueva clave privada*.
