@@ -1,5 +1,7 @@
 # Tienda Electrónica — Calidad de Software (Grupo 1)
 
+[![Pruebas](https://github.com/AlejitoB/TiendaElectronica/actions/workflows/pruebas.yml/badge.svg)](https://github.com/AlejitoB/TiendaElectronica/actions/workflows/pruebas.yml)
+
 Aplicación de escritorio en Java 17 (Swing + FlatLaf) para la gestión de clientes, inventario de artículos de computador y venta con pasarela de pagos simulada. Usa persistencia dual: **Firebase (nube)** o **MySQL (local)**, elegida al iniciar.
 
 ## Requisitos
@@ -28,6 +30,10 @@ mvn compile exec:java
 ```bash
 mvn test
 ```
+
+Las pruebas no necesitan XAMPP ni internet: los DAO se prueban contra una base **H2 en memoria** (modo MySQL). Al terminar, el reporte de cobertura queda en `target/site/jacoco/index.html`.
+
+**Integración continua:** GitHub Actions corre `mvn test` en cada push a `master` y en cada Pull Request (pestaña *Actions*). El resumen de cobertura por paquete aparece en cada ejecución y el reporte completo se descarga como artefacto `reporte-cobertura-jacoco`.
 
 Flujo: **Portada → Escoger base (Nube / Local) → Inicio de sesión**. El administrador entra al menú de su base y el cliente al menú del cliente.
 

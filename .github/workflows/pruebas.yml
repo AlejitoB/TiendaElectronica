@@ -1,0 +1,42 @@
+# Integracion continua: compila y corre las pruebas en cada push a master y en cada Pull Request.
+name: Pruebas
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Compilar y correr las pruebas (JUnit + JaCoCo)
+        run: mvn -B test
+
+      - name: Resumen de cobertura
+        if: always()
+        run: |
+          f=target/site/jacoco/jacoco.csv
+          [ -f "$f" ] || exit 0
+          {
+            echo "## Cobertura de pruebas (líneas)"
+            echo "| Paquete | Cobertura |"
+            echo "|---|---|"
+            awk -F, 'NR>1 { c[$2]+=$9; m[$2]+=$8 }
+                     END { for (p in c) if (c[p]+m[p]>0) printf "| %s | %.0f %% |\n", p, 100*c[p]/(c[p]+m[p]) }' "$f" | sort
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Guardar el reporte de cobertura
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-cobertura-jacoco
+          path: target/site/jacoco/
