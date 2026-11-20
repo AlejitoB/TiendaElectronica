@@ -4,3 +4,5 @@ tienda-electronica.json
 *-firebase-adminsdk-*.json
 config.properties
 auditoria.log
+frontend/build/
+frontend/node_modules/

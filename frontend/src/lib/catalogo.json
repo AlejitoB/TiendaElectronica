@@ -1,0 +1,122 @@
+[
+  {
+    "serial": "LAP-001",
+    "nombre": "Portátil Lenovo IdeaPad 3 15\" Ryzen 5 16 GB",
+    "marca": "Lenovo",
+    "categoria": "Portátiles",
+    "precio": 2499000,
+    "stock": 8
+  },
+  {
+    "serial": "LAP-002",
+    "nombre": "Portátil ASUS VivoBook 14 Core i5 8 GB",
+    "marca": "ASUS",
+    "categoria": "Portátiles",
+    "precio": 2799000,
+    "stock": 6
+  },
+  {
+    "serial": "LAP-003",
+    "nombre": "MacBook Air 13\" chip M2 256 GB",
+    "marca": "Apple",
+    "categoria": "Portátiles",
+    "precio": 4999000,
+    "stock": 4
+  },
+  {
+    "serial": "MON-001",
+    "nombre": "Monitor LG 24\" IPS Full HD",
+    "marca": "LG",
+    "categoria": "Monitores",
+    "precio": 649000,
+    "stock": 12
+  },
+  {
+    "serial": "MON-002",
+    "nombre": "Monitor Samsung 27\" curvo 75 Hz",
+    "marca": "Samsung",
+    "categoria": "Monitores",
+    "precio": 899000,
+    "stock": 7
+  },
+  {
+    "serial": "TEC-001",
+    "nombre": "Teclado mecánico Redragon Kumara",
+    "marca": "Redragon",
+    "categoria": "Periféricos",
+    "precio": 189000,
+    "stock": 20
+  },
+  {
+    "serial": "MOU-001",
+    "nombre": "Mouse inalámbrico Logitech M170",
+    "marca": "Logitech",
+    "categoria": "Periféricos",
+    "precio": 49900,
+    "stock": 35
+  },
+  {
+    "serial": "MOU-002",
+    "nombre": "Mouse gamer Logitech G203",
+    "marca": "Logitech",
+    "categoria": "Periféricos",
+    "precio": 119000,
+    "stock": 15
+  },
+  {
+    "serial": "CAM-001",
+    "nombre": "Cámara web Logitech C920 Full HD",
+    "marca": "Logitech",
+    "categoria": "Periféricos",
+    "precio": 289000,
+    "stock": 2
+  },
+  {
+    "serial": "AUD-001",
+    "nombre": "Diadema HyperX Cloud Stinger",
+    "marca": "HyperX",
+    "categoria": "Audio",
+    "precio": 229000,
+    "stock": 10
+  },
+  {
+    "serial": "ALM-001",
+    "nombre": "SSD Kingston NV2 1 TB NVMe",
+    "marca": "Kingston",
+    "categoria": "Almacenamiento",
+    "precio": 299000,
+    "stock": 18
+  },
+  {
+    "serial": "ALM-002",
+    "nombre": "Disco externo Seagate 2 TB USB 3.0",
+    "marca": "Seagate",
+    "categoria": "Almacenamiento",
+    "precio": 329000,
+    "stock": 9
+  },
+  {
+    "serial": "RAM-001",
+    "nombre": "Memoria RAM Corsair Vengeance 16 GB DDR4",
+    "marca": "Corsair",
+    "categoria": "Componentes",
+    "precio": 199000,
+    "stock": 14
+  },
+  {
+    "serial": "GPU-001",
+    "nombre": "Tarjeta gráfica MSI GeForce RTX 4060 8 GB",
+    "marca": "MSI",
+    "categoria": "Componentes",
+    "precio": 1699000,
+    "stock": 3
+  },
+  {
+    "serial": "RED-001",
+    "nombre": "Router WiFi TP-Link Archer C6",
+    "marca": "TP-Link",
+    "categoria": "Redes",
+    "precio": 179000,
+    "stock": 11
+  }
+]
