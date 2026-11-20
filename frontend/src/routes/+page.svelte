@@ -1,6 +1,6 @@
 <script>
   import { page } from "$app/state";
-  import { browser } from "$app/environment";
+  import { browser } from "$app/env";
   import { goto } from "$app/navigation";
   import {
     catalogo,
@@ -148,7 +148,7 @@
             </button>
           </div>
         </article>
-      {:else}<div class="panel">
+      {:else}{#if !$problema}<div class="panel">
           <h2>Sin coincidencias</h2>
           <p>Prueba otra marca o categoría.</p>
           <button
@@ -160,7 +160,7 @@
           >
             Ver todo el catálogo
           </button>
-        </div>{/each}
+        </div>{/if}{/each}
     </div>
   </section>
 </div>

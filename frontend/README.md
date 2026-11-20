@@ -1,19 +1,10 @@
-# Circuito · Tienda electrónica local
+# Tienda electrónica local
 
-Para correrlo deben entrar directamente a la carpeta frontend y correr `npm install`
+Con MySQL de XAMPP encendido y Node.js 24, abre una terminal en frontend y ejecuta:
 
-## Abrir la tienda
+    npm ci
+    npm run dev
 
-Con Node.js 24 instalado, abrir una terminal y ejecutar `npm start`. Abrir http://127.0.0.1:4173 en el navegador. La versión compilada funciona sin instalar dependencias y sin conexión a Internet. Detener con Ctrl+C.
+Abre la dirección Local que imprime Vite. Tanto el catálogo como la API funcionan en esa dirección. Para comprobar el inventario, abre /api/productos en el mismo origen. Una lista JSON y HTTP 200 indican que el servidor pudo consultar MySQL. Si devuelve 503, consulta el código de error en la terminal y revisa mysql.url, mysql.usuario y mysql.clave en config.properties junto al pom.xml.
 
-El enlace Administración abre el formulario local. El usuario es `admin`. La consola del servidor muestra una clave aleatoria para esa ejecución. Para conservar una clave propia, definir la variable de entorno `TIENDA_ADMIN_CLAVE` antes del arranque. La sesión administrativa dura una hora y se invalida al cerrar sesión o reiniciar el servidor.
-
-## Alcance del prototipo
-
-Las fichas reproducen los 15 artículos de CatalogoInicial.java. Los gráficos son ilustraciones de categoría. La tienda conserva carrito, existencias simuladas y último comprobante en sessionStorage, dentro de la pestaña. Se puede recargar durante el recorrido. Una sesión nueva e independiente permite repetir la demostración con stock inicial.
-
-El pago simulado permite elegir aprobación o rechazo sin introducir datos bancarios. La sesión administrativa se comprueba en el servidor local. La integración con los DAO, los usuarios Java y el inventario compartido corresponde a la siguiente fase. El servidor local de Node permite ejecutar y evaluar la maqueta de forma independiente.
-
-## Desarrollo
-
-Con Node.js 24, ejecutar `npm ci` y `npm run build` para regenerar la carpeta compilada. Usar `npm start` para probar todas las rutas, incluido el acceso administrativo.
+Para usar el servidor de la versión compilada, ejecuta npm run build y luego npm start. Abre http://127.0.0.1:4173. El usuario administrativo es admin y la clave temporal aparece en la terminal salvo que definas TIENDA_ADMIN_CLAVE.

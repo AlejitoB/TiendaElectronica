@@ -4,6 +4,9 @@ export const problema = writable("");
 export async function actualizar() {
   try {
     const r = await fetch("/api/productos");
+    if (!r.headers.get("content-type")?.includes("application/json")) {
+      throw Error("La API /api/productos devolvió una respuesta inesperada (HTTP " + r.status + "). Comprueba el servidor de la tienda.");
+    }
     const data = await r.json();
     if (!r.ok) throw Error(data.message);
     catalogo.set(data);
