@@ -4,12 +4,14 @@
   import { goto } from "$app/navigation";
   import {
     catalogo,
+    problema,
+    actualizar,
     tienda,
     moneda,
     cantidad,
     disponibles,
   } from "#lib/tienda.js";
-  const grupos = [...new Set(catalogo.map((p) => p.categoria))];
+  let grupos = $derived([...new Set($catalogo.map((p) => p.categoria))]);
   const fotos = {
     LAP: "laptop",
     MON: "desktop-computer",
@@ -19,10 +21,12 @@
     AUD: "headphone",
   };
   const orden = ["LAP-001", "AUD-001", "MON-001", "TEC-001"];
-  const productos = [
-    ...orden.map((id) => catalogo.find((p) => p.serial === id)),
-    ...catalogo.filter((p) => !orden.includes(p.serial)),
-  ];
+  let productos = $derived([
+    ...orden
+      .map((id) => $catalogo.find((p) => p.serial === id))
+      .filter(Boolean),
+    ...$catalogo.filter((p) => !orden.includes(p.serial)),
+  ]);
   let grupo = $state("Todos"),
     ordenar = $state("destacados"),
     filtros = $state(false),
@@ -56,6 +60,9 @@
     <h1>Catálogo de productos</h1>
   </div>
 </div>
+{#if $problema}<p class="error" role="alert">
+    {$problema} <button class="link" onclick={actualizar}>Reintentar</button>
+  </p>{/if}
 <div class="catalog">
   <aside class:open={filtros}>
     <button
@@ -78,8 +85,8 @@
         >
           {g}<span>
             {g === "Todos"
-              ? catalogo.length
-              : catalogo.filter((p) => p.categoria === g).length}
+              ? $catalogo.length
+              : $catalogo.filter((p) => p.categoria === g).length}
           </span>
         </button>{/each}
     </div>
@@ -107,7 +114,10 @@
         {@const n = $tienda.carrito[p.serial] || 0}
         <article class="product">
           <div class={"photo tone-" + prefijo}>
-            <small>{p.serial}</small>{#if fotos[prefijo]}<img
+            <small>{p.serial}</small>{#if p.tieneFoto}<img
+                src={"/api/foto?serial=" + encodeURIComponent(p.serial)}
+                alt={p.nombre}
+              />{:else if fotos[prefijo]}<img
                 src={"/equipos/" + fotos[prefijo] + ".png"}
                 alt=""
               />{:else}<span class="type-art">{p.categoria}</span>{/if}

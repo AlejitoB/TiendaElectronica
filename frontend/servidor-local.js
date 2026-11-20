@@ -1,3 +1,11 @@
+import {
+  preparar,
+  listar,
+  foto,
+  guardar,
+  comprar,
+  falla,
+} from "./inventario.js";
 import http from "node:http";
 import { readFile } from "node:fs/promises";
 import { randomBytes, createHash, timingSafeEqual } from "node:crypto";
@@ -74,6 +82,54 @@ http
         res.setHeader("Set-Cookie", cookie(id));
         return reply(200, "Acceso concedido.");
       }
+      if (url.pathname.startsWith("/api/")) {
+        const path = url.pathname;
+        if (req.method !== "GET" && req.headers.origin !== url.origin)
+          return reply(403, "Origen desconocido.");
+        if (path === "/api/admin/productos") {
+          const token = (req.headers.cookie || "").match(
+            /(?:^|; *)tienda_admin=([\w-]+)/,
+          )?.[1];
+          if (!(sessions.get(token) > Date.now()))
+            return reply(401, "Inicia sesión de nuevo.");
+        }
+        await preparar();
+        async function body() {
+          const chunks = [];
+          let size = 0;
+          for await (const chunk of req) {
+            size += chunk.length;
+            if (size > 2900000) falla("Foto demasiado grande.", 413);
+            chunks.push(chunk);
+          }
+          return JSON.parse(Buffer.concat(chunks).toString());
+        }
+        let result;
+        if (path === "/api/productos" && req.method === "GET")
+          result = await listar();
+        else if (path === "/api/foto" && req.method === "GET") {
+          const data = await foto(url.searchParams.get("serial") || "");
+          res.writeHead(200, {
+            "Content-Type": data.split(";")[0].slice(5),
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff",
+          });
+          return res.end(Buffer.from(data.split(",")[1], "base64"));
+        } else if (
+          path === "/api/admin/productos" &&
+          ["POST", "PUT"].includes(req.method)
+        ) {
+          await guardar(await body(), req.method === "PUT");
+          result = { message: "Producto guardado." };
+        } else if (path === "/api/compra" && req.method === "POST")
+          result = await comprar(await body());
+        else return reply(404, "Ruta desconocida.");
+        res.writeHead(200, {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-store",
+        });
+        return res.end(JSON.stringify(result));
+      }
       if (req.method !== "GET" && req.method !== "HEAD")
         return reply(405, "Método desconocido.");
       const path = decodeURIComponent(url.pathname);
@@ -88,6 +144,14 @@ http
       });
       res.end(req.method === "HEAD" ? undefined : content);
     } catch (error) {
+      if (error.status) return reply(error.status, error.message);
+      if (req.url.startsWith("/api/") && !(error instanceof SyntaxError)) {
+        console.error("Error de inventario:", error.code || error.name);
+        return reply(
+          503,
+          "No se pudo acceder al inventario. Revisa MySQL y config.properties.",
+        );
+      }
       reply(error.code === "ENOENT" ? 404 : 400, "Solicitud no disponible.");
     }
   })

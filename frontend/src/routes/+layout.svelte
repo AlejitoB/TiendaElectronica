@@ -9,7 +9,20 @@
   $effect(() => {
     busqueda = page.url.searchParams.get("q") || "";
   });
-  onMount(restaurar);
+  let oscuro = $state(false);
+  function aplicar(valor) {
+    oscuro = valor;
+    document.documentElement.dataset.theme = valor ? "dark" : "light";
+  }
+  onMount(() => {
+    aplicar(localStorage.getItem("tema") === "dark");
+    return restaurar();
+  });
+  function cambiar() {
+    aplicar(!oscuro);
+    localStorage.setItem("tema", oscuro ? "dark" : "light");
+  }
+
   function buscar(e) {
     e.preventDefault();
     goto(busqueda.trim() ? "/?q=" + encodeURIComponent(busqueda.trim()) : "/");
@@ -42,6 +55,14 @@
         </svg>
       </button>
     </form>
+    <button
+      class="theme-button"
+      aria-label="Tema oscuro"
+      aria-pressed={oscuro}
+      onclick={cambiar}
+    >
+      {oscuro ? "☾ Oscuro" : "☀ Claro"}
+    </button>
     <a class="basket" href="/carrito/">Carrito <b>{$unidades}</b></a>
   </div>
 </header>

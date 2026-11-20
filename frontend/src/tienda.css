@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: light --default;
+  themes:
+    light --default,
+    dark;
 }
 :root {
   font-family: Inter, "Segoe UI", system-ui, sans-serif;
@@ -409,6 +411,149 @@ footer .wrap {
 }
 @media (max-width: 350px) {
   .gridprod {
+    grid-template-columns: 1fr;
+  }
+}
+:root {
+  --surface: #fff;
+  --paper: #f4f4ee;
+  --ink: #182d25;
+  --muted: #4b6354;
+  --action: #174a39;
+  --button-text: white;
+  --soft: #e0eadf;
+  --stroke: #bacbbf;
+  background: var(--paper);
+  color: var(--ink);
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --surface: #18293b;
+  --paper: #101c29;
+  --ink: #ecf3fa;
+  --muted: #b5c7d4;
+  --action: #83c7ea;
+  --button-text: #10283a;
+  --soft: #293e51;
+  --stroke: #526678;
+  color-scheme: dark;
+}
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+header {
+  background: #18392d;
+  border-color: #44654f;
+}
+[data-theme="dark"] header {
+  background: #102235;
+  border-color: var(--action);
+}
+.theme-button {
+  cursor: pointer;
+  color: white;
+  font-weight: 650;
+}
+.bar {
+  gap: clamp(10px, 3vw, 40px);
+}
+.mark,
+.basket b,
+.search button {
+  background: var(--soft);
+  color: var(--ink);
+}
+.dot {
+  color: #c1d5bc;
+}
+.panel,
+.product,
+.input,
+.select {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--stroke);
+}
+.stock,
+.brand,
+.eyebrow,
+.type-art,
+.photo small {
+  color: var(--muted);
+}
+.back,
+.link,
+footer a {
+  color: var(--action);
+}
+.buy.btn {
+  background: var(--action);
+  color: var(--button-text);
+  border-color: var(--action);
+}
+.facet button.chosen,
+.photo {
+  background: var(--soft);
+  color: var(--ink);
+}
+.editor {
+  max-width: 760px;
+  margin-bottom: 20px;
+}
+.formgrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.preview {
+  height: 140px;
+  object-fit: contain;
+}
+.cardchoice {
+  border: 1px solid var(--stroke);
+  border-radius: 10px;
+  padding: 14px;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 12px !important;
+}
+.cardchoice input {
+  width: auto;
+}
+.aprobado {
+  display: inline-grid;
+  place-items: center;
+  background: var(--action);
+  color: var(--button-text);
+  width: 1.3em;
+  height: 1.3em;
+  border-radius: 50%;
+  animation: aparece 0.4s ease-out;
+}
+.summary,
+.panel {
+  overflow-wrap: anywhere;
+}
+@keyframes aparece {
+  from {
+    transform: scale(0.65);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aprobado,
+  .skeleton {
+    animation: none;
+  }
+}
+@media (max-width: 600px) {
+  .formgrid {
     grid-template-columns: 1fr;
   }
 }

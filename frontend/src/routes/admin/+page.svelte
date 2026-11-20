@@ -1,4 +1,5 @@
 <script>
+  import Productos from "#lib/Productos.svelte";
   import { onMount } from "svelte";
   let usuario = $state(""),
     clave = $state(""),
@@ -40,7 +41,8 @@
   ← Volver al catálogo
 </a>
 <h1>Administración</h1>
-{#if dentro}<section class="panel narrow stack">
+{#if dentro}<Productos />
+  <section class="panel narrow stack">
     <h2>Sesión administrativa activa</h2>
     <p>Has iniciado sesión en la tienda local.</p>
     <button class="btn" disabled={ocupado} onclick={() => sesion("DELETE")}>

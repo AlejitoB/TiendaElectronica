@@ -9,9 +9,11 @@
 >
   ← Volver al catálogo
 </a>
-{#if pedido}<h1>Compra confirmada</h1>
+{#if pedido}<p class="eyebrow">PASO 4 DE 4</p>
+  <h1><span class="aprobado" aria-hidden="true">✓</span> Pago aprobado</h1>
   <section class="panel narrow">
     <p class="eyebrow">COMPROBANTE SIMULADO</p>
+    {#if pedido.cliente}<p>{pedido.cliente} · {pedido.direccion}</p>{/if}
     <h2>Pedido {pedido.id}</h2>
     <p>{new Date(pedido.fecha).toLocaleString("es-CO")}</p>
     {#each pedido.items as p}<div class="row">

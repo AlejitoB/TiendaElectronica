@@ -6,3 +6,5 @@ config.properties
 auditoria.log
 frontend/build/
 frontend/node_modules/
+frontend/.env
+frontend/.svelte-kit/

@@ -1,6 +1,17 @@
 import { writable, derived, get } from "svelte/store";
-import catalogo from "./catalogo.json";
-export { catalogo };
+export const catalogo = writable([]);
+export const problema = writable("");
+export async function actualizar() {
+  try {
+    const r = await fetch("/api/productos");
+    const data = await r.json();
+    if (!r.ok) throw Error(data.message);
+    catalogo.set(data);
+    problema.set("");
+  } catch (e) {
+    problema.set(e.message);
+  }
+}
 export const moneda = (n) =>
   new Intl.NumberFormat("es-CO", {
     style: "currency",
@@ -11,6 +22,7 @@ const inicial = () => ({ carrito: {}, vendidos: {}, recibo: null });
 export const tienda = writable(inicial());
 const clave = "tienda-electronica.demo.v1";
 export function restaurar() {
+  actualizar();
   try {
     const data = JSON.parse(sessionStorage.getItem(clave));
     if (data?.carrito && data?.vendidos) tienda.set(data);
@@ -23,8 +35,8 @@ export function restaurar() {
     } catch {}
   });
 }
-export const lineas = derived(tienda, (s) =>
-  catalogo
+export const lineas = derived([tienda, catalogo], ([s, productos]) =>
+  productos
     .filter((p) => s.carrito[p.serial] > 0)
     .map((p) => ({ ...p, cantidad: s.carrito[p.serial] })),
 );
@@ -35,7 +47,7 @@ export const unidades = derived(lineas, (items) =>
   items.reduce((n, p) => n + p.cantidad, 0),
 );
 export function disponibles(p, s) {
-  return p.stock - (s.vendidos[p.serial] || 0);
+  return p.stock;
 }
 export function cantidad(p, valor) {
   tienda.update((s) => ({
@@ -46,22 +58,28 @@ export function cantidad(p, valor) {
     },
   }));
 }
-export function confirmar() {
-  const items = get(lineas);
-  if (!items.length) return false;
-  const s = get(tienda);
-  const vendidos = { ...s.vendidos };
-  for (const p of items)
-    vendidos[p.serial] = (vendidos[p.serial] || 0) + p.cantidad;
-  tienda.set({
-    carrito: {},
-    vendidos,
-    recibo: {
-      id: crypto.randomUUID().slice(0, 8).toUpperCase(),
-      fecha: new Date().toISOString(),
-      items,
-      total: get(total),
-    },
+export async function confirmar(datos) {
+  const items = get(lineas).map(({ serial, cantidad, precio }) => ({
+    serial,
+    cantidad,
+    precio,
+  }));
+  const signature = JSON.stringify({ items, ...datos });
+  let intento = get(tienda).intento;
+  if (intento?.signature !== signature) {
+    intento = { signature, id: crypto.randomUUID() };
+    tienda.update((s) => ({ ...s, intento }));
+  }
+  const r = await fetch("/api/compra", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...datos, items, id: intento.id }),
   });
-  return true;
+  const recibo = await r.json();
+  if (!r.ok) {
+    if (r.status === 409) await actualizar();
+    throw Error(recibo.message);
+  }
+  tienda.set({ ...inicial(), recibo });
+  await actualizar();
 }
