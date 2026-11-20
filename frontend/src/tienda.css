@@ -282,8 +282,8 @@ footer a {
   max-width: 560px;
 }
 .summary,
-.stack,
-.stack label {
+.formulario,
+.formulario label {
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -291,12 +291,12 @@ footer a {
 .summary {
   align-self: start;
 }
-.stack label {
+.formulario label {
   gap: 6px;
   font-weight: 600;
 }
-.stack input,
-.stack select {
+.formulario input,
+.formulario select {
   width: 100%;
 }
 .row {
@@ -428,14 +428,14 @@ footer .wrap {
   color-scheme: light;
 }
 :root[data-theme="dark"] {
-  --surface: #18293b;
-  --paper: #101c29;
-  --ink: #ecf3fa;
-  --muted: #b5c7d4;
-  --action: #83c7ea;
-  --button-text: #10283a;
-  --soft: #293e51;
-  --stroke: #526678;
+  --surface: #2b302d;
+  --paper: #212522;
+  --ink: #e8e7df;
+  --muted: #b8c1b8;
+  --action: #a3c7ac;
+  --button-text: #172b1d;
+  --soft: #363e38;
+  --stroke: #56635a;
   color-scheme: dark;
 }
 body {
@@ -447,7 +447,7 @@ header {
   border-color: #44654f;
 }
 [data-theme="dark"] header {
-  background: #102235;
+  background: #262d28;
   border-color: var(--action);
 }
 .theme-button {
@@ -557,3 +557,26 @@ footer a {
     grid-template-columns: 1fr;
   }
 }
+
+
+.formulario { align-self: start; }
+.formulario .btn, .summary .btn {
+  align-self: flex-start;
+  flex: none;
+  height: 2.75rem;
+  padding-inline: 1.25rem;
+}
+.demo-numeros { color: var(--muted); font-size: .9rem; }
+[data-theme="dark"] .search { background: var(--soft); color: var(--ink); }
+[data-theme="dark"] header { border-color: var(--stroke); }
+.recibo { max-width: 36rem; margin-inline: auto; text-align: center; }
+.ticket { text-align: start; border-top: 4px solid var(--action); }
+.ticket .eyebrow, .ticket .price { text-align: center; }
+.partida {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  padding-block: .75rem;
+  border-bottom: 1px dashed var(--stroke);
+}
+.partida b { white-space: nowrap; font-variant-numeric: tabular-nums; }

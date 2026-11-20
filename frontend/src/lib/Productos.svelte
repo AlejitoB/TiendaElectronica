@@ -71,7 +71,7 @@
   }
 </script>
 
-<form class="panel stack editor" onsubmit={guardar}>
+<form class="panel formulario editor" onsubmit={guardar}>
   <h2>Productos</h2>
   <label>
     Producto<select

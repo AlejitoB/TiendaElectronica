@@ -67,7 +67,7 @@ export async function confirmar(datos) {
     cantidad,
     precio,
   }));
-  const signature = JSON.stringify({ items, ...datos });
+  const signature = JSON.stringify([items, datos.nombre, datos.direccion, datos.numero.slice(-4), datos.vencimiento]);
   let intento = get(tienda).intento;
   if (intento?.signature !== signature) {
     intento = { signature, id: crypto.randomUUID() };
@@ -81,7 +81,7 @@ export async function confirmar(datos) {
   const recibo = await r.json();
   if (!r.ok) {
     if (r.status === 409) await actualizar();
-    throw Error(recibo.message);
+    throw Object.assign(Error(recibo.message), { status: r.status });
   }
   tienda.set({ ...inicial(), recibo });
   await actualizar();

@@ -2,24 +2,31 @@ import mysql from "mysql2/promise";
 import { readFile } from "node:fs/promises";
 import inicial from "./src/lib/catalogo.json" with { type: "json" };
 
-let config = "";
-try {
-  config = await readFile(
-    new URL("../config.properties", import.meta.url),
-    "utf8",
-  );
-} catch (e) {
-  if (e.code !== "ENOENT") throw e;
+import { prepararCuentas, autenticar } from "./cuentas.js";
+import { validarPago } from "./src/lib/pago-demo.js";
+
+const props = {};
+for (const archivo of ["config.example.properties", "config.properties"]) {
+  try {
+    const contenido = await readFile(new URL("../" + archivo, import.meta.url), "utf8");
+    for (const linea of contenido.split(/\r?\n/)) {
+      const campo = linea.match(/^\s*([\w.]+)\s*=\s*(.*)$/);
+      if (campo) props[campo[1]] = campo[2].trim();
+    }
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
 }
-const props = Object.fromEntries(
-  config
-    .split(/\r?\n/)
-    .filter((s) => /^mysql\./.test(s))
-    .map((s) => [
-      s.slice(0, s.indexOf("=")).trim(),
-      s.slice(s.indexOf("=") + 1).trim(),
-    ]),
-);
+const valor = clave => process.env["TIENDA_" + clave.toUpperCase().replaceAll(".", "_")] ?? props[clave];
+export async function ingresar(usuario, clave) {
+  await preparar();
+  await (cuentasListas ??= prepararCuentas(pool, valor).catch(error => {
+    cuentasListas = null;
+    throw error;
+  }));
+  return autenticar(pool, usuario, clave);
+}
+let cuentasListas;
 const url = new URL(
   (
     process.env.TIENDA_MYSQL_URL ||
@@ -187,12 +194,16 @@ export async function guardar(p, editar) {
       );
   });
 }
-export async function comprar(d) {
+export async function comprar(d, usuario) {
   if (!/^[0-9a-f-]{36}$/i.test(d.id)) falla("Referencia inválida.");
   const cliente = texto(d.nombre, 60),
     direccion = texto(d.direccion, 200);
-  if (!["Visa", "Mastercard", "Rechazo"].includes(d.tarjeta))
-    falla("Selecciona una tarjeta de prueba.");
+  let tarjeta;
+  try {
+    tarjeta = validarPago(d.numero, d.vencimiento);
+  } catch (error) {
+    falla(error.message);
+  }
   if (!Array.isArray(d.items) || !d.items.length || d.items.length > 500)
     falla("Carrito inválido.");
   return transaccion(async (c) => {
@@ -204,9 +215,11 @@ export async function comprar(d) {
         "SELECT recibo FROM compra_web WHERE id=?",
         [d.id],
       );
-      return JSON.parse(rows[0].recibo);
+      const recibo = JSON.parse(rows[0].recibo);
+      if (recibo.usuario !== usuario) falla("Referencia de compra no disponible.", 409);
+      return recibo;
     }
-    if (d.tarjeta === "Rechazo")
+    if (!tarjeta.aprobada)
       falla(
         "Pago rechazado. Elige otra tarjeta de prueba para reintentar.",
         422,
@@ -240,7 +253,9 @@ export async function comprar(d) {
       fecha: new Date().toISOString(),
       cliente,
       direccion,
-      tarjeta: d.tarjeta,
+      usuario,
+      tarjeta: tarjeta.marca,
+      terminacion: tarjeta.numero.slice(-4),
       items,
       total,
     };
@@ -251,7 +266,7 @@ export async function comprar(d) {
         r.fecha,
         cliente,
         total,
-        d.tarjeta,
+        tarjeta.marca,
         "SIM-" + r.id,
         items.map((i) => i.cantidad + " x " + i.nombre).join("\n"),
       ],

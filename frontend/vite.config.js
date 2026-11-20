@@ -18,7 +18,7 @@ export default defineConfig({
     sveltekit({
       adapter: adapter(),
       prerender: {
-        entries: ["/", "/carrito/", "/pago/", "/comprobante/", "/admin/"],
+        entries: ["/", "/carrito/", "/pago/", "/comprobante/", "/admin/", "/ingresar/"],
       },
     }),
   ],

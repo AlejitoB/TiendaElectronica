@@ -59,7 +59,7 @@
         class="btn buy"
         href="/pago/"
       >
-        Continuar al pago
+        Comprar
       </a>
     </section>
   </div>{/if}

@@ -1,4 +1,5 @@
 import {
+  ingresar,
   preparar,
   listar,
   foto,
@@ -7,16 +8,12 @@ import {
   falla,
 } from "./inventario.js";
 import { readFile } from "node:fs/promises";
-import { randomBytes, createHash, timingSafeEqual } from "node:crypto";
+import { randomBytes } from "node:crypto";
 import { resolve, sep, extname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("./build/", import.meta.url));
 
-const password =
-  process.env.TIENDA_ADMIN_CLAVE || randomBytes(12).toString("base64url");
-if (!process.env.TIENDA_ADMIN_CLAVE)
-  console.log("Clave temporal de admin:", password);
 const sessions = new Map();
 const types = {
   ".html": "text/html; charset=utf-8",
@@ -25,15 +22,13 @@ const types = {
   ".png": "image/png",
   ".json": "application/json",
 };
-const hash = (value) => createHash("sha256").update(value).digest();
-
 export async function atender(req, res) {
     const reply = (status, message) => {
       res.writeHead(status, {
         "Content-Type": "application/json",
         "Cache-Control": "no-store",
       });
-      res.end(JSON.stringify({ message }));
+      res.end(JSON.stringify(typeof message === "string" ? { message } : message));
     };
     try {
       const port = req.socket.localPort;
@@ -41,20 +36,19 @@ export async function atender(req, res) {
       if (!localHosts.includes(req.headers.host))
         return reply(403, "Host desconocido.");
       const url = new URL(req.url, "http://" + req.headers.host);
-      if (url.pathname === "/api/admin") {
-        for (const [key, expiry] of sessions)
-          if (expiry <= Date.now()) sessions.delete(key);
-        const token = (req.headers.cookie || "").match(
-          /(?:^|; *)tienda_admin=([\w-]+)/,
-        )?.[1];
+      for (const [key, session] of sessions)
+        if (session.expiry <= Date.now()) sessions.delete(key);
+      const token = (req.headers.cookie || "").match(/(?:^|; *)tienda_sesion=([\w-]+)/)?.[1];
+      const session = sessions.get(token);
+      if (url.pathname === "/api/sesion") {
         if (req.method === "GET")
-          return reply(sessions.has(token) ? 200 : 401, "Sesión");
+          return session ? reply(200, { rol: session.rol }) : reply(401, "Inicia sesión.");
         if (req.headers.origin !== url.origin)
           return reply(403, "Origen desconocido.");
         const cookie = (value) =>
-          "tienda_admin=" +
+          "tienda_sesion=" +
           value +
-          "; HttpOnly; SameSite=Strict; Path=/api/admin; Max-Age=" +
+          "; HttpOnly; SameSite=Strict; Path=/api; Max-Age=" +
           (value ? 3600 : 0);
         if (req.method === "DELETE") {
           sessions.delete(token);
@@ -69,28 +63,23 @@ export async function atender(req, res) {
             return reply(413, "Formulario demasiado largo.");
         }
         const data = JSON.parse(body);
-        if (
-          data.usuario !== "admin" ||
-          typeof data.clave !== "string" ||
-          !timingSafeEqual(hash(data.clave), hash(password))
-        )
+        const cuenta = await ingresar(data?.usuario, data?.clave);
+        if (!cuenta)
           return reply(401, "Usuario o contraseña incorrectos.");
         const id = randomBytes(32).toString("base64url");
         sessions.delete(token);
-        sessions.set(id, Date.now() + 3600000);
+        sessions.set(id, { ...cuenta, expiry: Date.now() + 3600000 });
         res.setHeader("Set-Cookie", cookie(id));
-        return reply(200, "Acceso concedido.");
+        return reply(200, { rol: cuenta.rol });
       }
       if (url.pathname.startsWith("/api/")) {
         const path = url.pathname;
         if (req.method !== "GET" && req.headers.origin !== url.origin)
           return reply(403, "Origen desconocido.");
-        if (path === "/api/admin/productos") {
-          const token = (req.headers.cookie || "").match(
-            /(?:^|; *)tienda_admin=([\w-]+)/,
-          )?.[1];
-          if (!(sessions.get(token) > Date.now()))
-            return reply(401, "Inicia sesión de nuevo.");
+        if (path === "/api/admin/productos" || path === "/api/compra") {
+          if (!session) return reply(401, "Inicia sesión para continuar.");
+          if (path === "/api/admin/productos" && session.rol !== "admin")
+            return reply(403, "Se requiere una cuenta administrativa.");
         }
         await preparar();
         async function body() {
@@ -121,7 +110,7 @@ export async function atender(req, res) {
           await guardar(await body(), req.method === "PUT");
           result = { message: "Producto guardado." };
         } else if (path === "/api/compra" && req.method === "POST")
-          result = await comprar(await body());
+          result = await comprar(await body(), session.usuario);
         else return reply(404, "Ruta desconocida.");
         res.writeHead(200, {
           "Content-Type": "application/json",
@@ -148,7 +137,7 @@ export async function atender(req, res) {
         console.error("Error de inventario:", error.code || error.name);
         return reply(
           503,
-          "No se pudo acceder al inventario. Revisa MySQL y config.properties.",
+          "No se pudo acceder a la base de datos. Revisa MySQL en XAMPP y config.properties.",
         );
       }
       reply(error.code === "ENOENT" ? 404 : 400, "Solicitud no disponible.");

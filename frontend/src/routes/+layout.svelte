@@ -69,8 +69,8 @@
 <main id="contenido" class="wrap">{@render children()}</main>
 <footer>
   <div class="wrap">
-    <span>Circuito · Tienda electrónica</span><a href="/admin/">
-      Administración
+    <span>Circuito · Tienda electrónica</span><a href="/ingresar/">
+      Mi cuenta
     </a>
   </div>
 </footer>
