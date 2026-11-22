@@ -1,32 +1,48 @@
 package Logica_Conexion;
 
+import Logica_Negocio.Carrito;
 import Logica_Negocio.Pedido;
 import Logica_Negocio.Producto;
+import Logica_Negocio.ResumenPedido;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Contrato del inventario. Lo implementan ProductoProvider (Firebase) y ProductoDAO (MySQL),
- * asi las pantallas no cambian segun la base elegida.
+ * Contrato del inventario y pedidos. Lo implementan ProductoProvider (Firebase)
+ * y ProductoDAO (MySQL) para mantener la misma lógica en ambos motores.
  */
 public interface DAOInterfaceProducto {
 
-    public ArrayList<Producto> listar() throws Exception;
+    ArrayList<Producto> listar() throws Exception;
 
-    public Producto buscar(String serial) throws Exception;
+    Producto buscar(String serial) throws Exception;
 
     /** Crea el producto o lo actualiza si el serial ya existe. */
-    public void guardar(Producto p) throws Exception;
+    void guardar(Producto p) throws Exception;
 
-    public boolean eliminar(String serial) throws Exception;
+    boolean eliminar(String serial) throws Exception;
+
+    /** Descuenta de forma atómica el stock antes de cobrar en pasarela. */
+    void reservarStock(List<Carrito.Item> items) throws Exception;
+
+    /** Devuelve al inventario las unidades reservadas si el pago se rechaza o falla. */
+    void liberarStock(List<Carrito.Item> items) throws Exception;
+
+    /** Persiste el pedido confirmado tras aprobarse el pago. */
+    void guardarPedido(Pedido pedido) throws Exception;
+
+    List<ResumenPedido> listarPedidos() throws Exception;
+
+    List<ResumenPedido> listarPedidosPorCliente(String cliente) throws Exception;
 
     /**
-     * Descuenta el stock de cada articulo y guarda el pedido en una sola transaccion:
-     * si algun articulo no alcanza, no se descuenta nada (0 registros a medias).
+     * Descuenta el stock de cada artículo y guarda el pedido en una sola transacción:
+     * si algún artículo no alcanza, no se descuenta nada (0 registros a medias).
      */
-    public void registrarVenta(Pedido pedido) throws Exception;
+    void registrarVenta(Pedido pedido) throws Exception;
 
-    /** Implementacion segun la base elegida en EscogerBD. */
-    public static DAOInterfaceProducto Actual() {
+    /** Implementación según la base elegida en el acceso. */
+    static DAOInterfaceProducto Actual() {
         return Conexion.modoNube ? new ProductoProvider() : new ProductoDAO();
     }
 }
