@@ -13,7 +13,7 @@ public class Carrito {
 
         public final Producto producto;
         // Paquete-privado para que pruebas en Logica_Negocio lean directo sin exponer mutación externa.
-        public int cantidad;
+        int cantidad;
 
         public Item(Producto producto, int cantidad) {
             this.producto = producto;
