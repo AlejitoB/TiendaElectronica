@@ -1,36 +1,32 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Logica_Negocio;
 
 /**
- *
- * @author 1058932609
+ * Artículo del inventario de la tienda electrónica.
  */
 public class Producto {
 
-    public String nombre,marca,serial;
-    public String categoria = "";
+    private String nombre = "";
+    private String marca = "";
+    private String serial = "";
+    private String categoria = "";
     // Precio en pesos colombianos (sin decimales) y unidades disponibles en inventario.
-    public long precio;
-    public int stock;
+    private long precio;
+    private int stock;
 
-    public Producto(){
-
+    public Producto() {
     }
 
     public Producto(String nombre, String marca, String serial) {
-        this.nombre = nombre;
-        this.marca = marca;
-        this.serial = serial;
+        setNombre(nombre);
+        setMarca(marca);
+        setSerial(serial);
     }
 
     public Producto(String serial, String nombre, String marca, String categoria, long precio, int stock) {
         this(nombre, marca, serial);
-        this.categoria = categoria;
-        this.precio = precio;
-        this.stock = stock;
+        setCategoria(categoria);
+        setPrecio(precio);
+        setStock(stock);
     }
 
     public String getNombre() {
@@ -38,7 +34,7 @@ public class Producto {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre == null ? "" : nombre;
     }
 
     public String getMarca() {
@@ -46,7 +42,7 @@ public class Producto {
     }
 
     public void setMarca(String marca) {
-        this.marca = marca;
+        this.marca = marca == null ? "" : marca;
     }
 
     public String getSerial() {
@@ -54,7 +50,7 @@ public class Producto {
     }
 
     public void setSerial(String serial) {
-        this.serial = serial;
+        this.serial = serial == null ? "" : serial;
     }
 
     public String getCategoria() {
@@ -62,7 +58,7 @@ public class Producto {
     }
 
     public void setCategoria(String categoria) {
-        this.categoria = categoria;
+        this.categoria = categoria == null ? "" : categoria;
     }
 
     public long getPrecio() {
@@ -80,5 +76,4 @@ public class Producto {
     public void setStock(int stock) {
         this.stock = stock;
     }
-
 }

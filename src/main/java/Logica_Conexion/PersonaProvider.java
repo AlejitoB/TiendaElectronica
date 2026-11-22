@@ -1,161 +1,112 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Logica_Conexion;
 
 import Logica_Negocio.Persona;
-import Logica_Negocio.Producto;
-import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.Precondition;
-import com.google.cloud.firestore.QuerySnapshot;
-import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 import java.util.ArrayList;
 import java.util.Map;
-import javax.swing.JOptionPane;
 
 /**
- *
- * @author Santiago Lopez
+ * Proveedor de clientes en Firestore (capa de datos pura sin acoplamiento a interfaz).
  */
 public class PersonaProvider {
 
-    CollectionReference reference;
-    public static Firestore db;
+    private static final String COLECCION = "Persona";
 
-    public static boolean GuardarPersona(String coleccion, String documento, Map<String, Object> data) {
-        db = FirestoreClient.getFirestore();
-        try {
-            DocumentReference docRef = db.collection(coleccion).document(documento);
-            ApiFuture<WriteResult> result = docRef.set(data);
-            System.out.println("Guardado Correctamente");
-            return true;
-        } catch (Exception e) {
-            System.out.println("Error:" + e.getMessage());
-        }
-        return false;
+    private static Firestore firestore() {
+        return Conexion.db != null ? Conexion.db : FirestoreClient.getFirestore();
     }
 
-    public static ArrayList CargarInfoPersona() {
-
-        Persona objper;
-        Producto produ;
-
-        ArrayList<Persona> lspersona = new ArrayList<>();
-        ArrayList<Producto> lsprodu = new ArrayList<>();
-
+    public static boolean GuardarPersona(String coleccion, String documento, Map<String, Object> data) {
         try {
-            CollectionReference persona = Conexion.db.collection("Persona");
-            ApiFuture<QuerySnapshot> querySnap = persona.get();
-
-            for (DocumentSnapshot document : querySnap.get().getDocuments()) {
-
-                objper = new Persona(document.getString("Uid"),
-                        document.getString("Nombre"),
-                        document.getString("Apellido"),
-                        document.getString("Direccion"),
-                        document.getString("Cedula"),
-                        document.getString("Productos"),
-                        document.getString("Nom_img")
-                );
-                lspersona.add(objper);
-
-            }
-
+            DocumentReference docRef = firestore().collection(coleccion).document(documento);
+            docRef.set(data).get();
+            return true;
         } catch (Exception e) {
-            System.out.println("Error:" + e.getMessage());
+            System.out.println("Error Firestore GuardarPersona: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public static ArrayList<Persona> CargarInfoPersona() {
+        ArrayList<Persona> lspersona = new ArrayList<>();
+        try {
+            CollectionReference persona = firestore().collection(COLECCION);
+            for (DocumentSnapshot document : persona.get().get().getDocuments()) {
+                lspersona.add(aPersona(document));
+            }
+        } catch (Exception e) {
+            System.out.println("Error Firestore CargarInfoPersona: " + e.getMessage());
         }
         return lspersona;
     }
 
-   public static boolean RetornarUid(String uid) {
-
-        ArrayList<String> uids = new ArrayList<>();
-        boolean rta = true;
-
-        try {
-            CollectionReference persona = Conexion.db.collection("Persona");
-            ApiFuture<QuerySnapshot> querySnap = persona.get();
-
-            for (DocumentSnapshot document : querySnap.get().getDocuments()) {
-
-                uids.add(document.getString("Uid"));
-
-            }
-
-            for (int i = 0; i < uids.size(); i++) {
-
-                if (uids.get(i).equals(uid)) {
-                    System.out.println("entra");
-                    return rta;
-                }
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error:" + e.getMessage());
-        }
-        return !rta;
+    public static boolean RetornarUid(String uid) {
+        return CargarInfoPersonaCodigo(uid) != null;
     }
 
     public static Persona CargarInfoPersonaCodigo(String codigo) {
-
-        Persona objper;
-        Persona objper1 = null;
-
-        ArrayList<Persona> lspersona = new ArrayList<>();
-        ArrayList<Producto> lsprodu = new ArrayList<>();
-
+        if (codigo == null || codigo.isBlank()) {
+            return null;
+        }
         try {
-            CollectionReference persona = Conexion.db.collection("Persona");
-            ApiFuture<QuerySnapshot> querySnap = persona.get();
-
-            for (DocumentSnapshot document : querySnap.get().getDocuments()) {
-
-                objper = new Persona(document.getString("Uid"),
-                        document.getString("Nombre"),
-                        document.getString("Apellido"),
-                        document.getString("Direccion"),
-                        document.getString("Cedula"),
-                        document.getString("Productos"),
-                        document.getString("Nom_img")
-                );
-                lspersona.add(objper);
-
+            CollectionReference col = firestore().collection(COLECCION);
+            DocumentSnapshot directo = col.document(codigo).get().get();
+            if (directo.exists()) {
+                return aPersona(directo);
             }
-
+            for (DocumentSnapshot doc : col.whereEqualTo("Uid", codigo).get().get().getDocuments()) {
+                return aPersona(doc);
+            }
         } catch (Exception e) {
-            System.out.println("Error:" + e.getMessage());
+            System.out.println("Error Firestore CargarInfoPersonaCodigo: " + e.getMessage());
         }
-        for (int i = 0; i < lspersona.size(); i++) {
-            if (codigo.equals(lspersona.get(i).getUid())) {
-                objper1 = lspersona.get(i);
-            }
-        }
-        return objper1;
+        return null;
     }
-    public static boolean EliminarPersona(String coleccion, String documento) {
-        db = FirestoreClient.getFirestore();
-        boolean res = RetornarUid(documento);
-        System.out.println("Respuesta " + res);
 
+    public static boolean EliminarPersona(String coleccion, String uid) {
+        if (uid == null || uid.isBlank()) {
+            return false;
+        }
         try {
-            if (res != false) {
-                DocumentReference docref = db.collection(coleccion).document(documento);
-                ApiFuture<WriteResult> result = docref.delete(Precondition.NONE);
-                System.out.println("Eliminado exitosamente");
+            CollectionReference col = firestore().collection(coleccion);
+            DocumentSnapshot directo = col.document(uid).get().get();
+            if (directo.exists()) {
+                directo.getReference().delete(Precondition.NONE).get();
                 return true;
             }
-
+            for (DocumentSnapshot doc : col.whereEqualTo("Uid", uid).get().get().getDocuments()) {
+                doc.getReference().delete(Precondition.NONE).get();
+                return true;
+            }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Cliente no encontrado");
+            System.out.println("Error Firestore EliminarPersona: " + e.getMessage());
         }
-
         return false;
     }
 
+    static Persona aPersona(DocumentSnapshot document) {
+        String prod = document.getString("Productos");
+        if (prod == null) {
+            prod = document.getString("Producto");
+        }
+        return new Persona(
+                nvl(document.getString("Uid")),
+                nvl(document.getString("Nombre")),
+                nvl(document.getString("Apellido")),
+                nvl(document.getString("Direccion")),
+                nvl(document.getString("Cedula")),
+                nvl(prod),
+                nvl(document.getString("Nom_img")),
+                nvl(document.getString("Correo")),
+                nvl(document.getString("Telefono")));
+    }
+
+    private static String nvl(String s) {
+        return s == null ? "" : s;
+    }
 }

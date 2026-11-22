@@ -85,11 +85,16 @@ public class PasarelaWompi {
                 .POST(HttpRequest.BodyPublishers.ofString(GSON.toJson(cuerpo)));
     }
 
-    private static JsonObject pedir(HttpRequest.Builder req) throws Exception {
+    private static synchronized HttpClient clienteHttp() {
         if (http == null) {
             http = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10)).build();
         }
-        HttpResponse<String> r = http.send(req.timeout(Duration.ofSeconds(20)).build(), HttpResponse.BodyHandlers.ofString());
+        return http;
+    }
+
+    private static JsonObject pedir(HttpRequest.Builder req) throws Exception {
+        HttpResponse<String> r = clienteHttp().send(req.timeout(Duration.ofSeconds(20)).build(),
+                HttpResponse.BodyHandlers.ofString());
         if (r.statusCode() / 100 != 2) {
             throw new IllegalStateException("Wompi respondió " + r.statusCode() + ": " + r.body());
         }

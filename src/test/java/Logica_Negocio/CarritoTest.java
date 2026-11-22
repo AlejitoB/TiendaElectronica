@@ -42,6 +42,18 @@ class CarritoTest {
     }
 
     @Test
+    void actualizarCantidadYListaInmutable() {
+        Carrito c = new Carrito();
+        c.Agregar(mouse, 2);
+        assertNull(c.ActualizarCantidad("MOU-001", 3));
+        assertEquals(3, c.Buscar("MOU-001").getCantidad());
+        assertNotNull(c.ActualizarCantidad("MOU-001", 4));
+        assertNull(c.ActualizarCantidad("MOU-001", 0));
+        assertTrue(c.EstaVacio());
+        assertThrows(UnsupportedOperationException.class, () -> c.Items().add(new Carrito.Item(ssd, 1)));
+    }
+
+    @Test
     void elPedidoCopiaLosItemsDelCarrito() {
         Carrito c = new Carrito();
         c.Agregar(ssd, 2);

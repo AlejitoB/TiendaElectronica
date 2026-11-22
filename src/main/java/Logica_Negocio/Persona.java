@@ -1,28 +1,41 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Logica_Negocio;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
- *
- * @author 1058932609
+ * Cliente registrado en el sistema.
  */
 public class Persona {
-    
-    public String uid,nombre,apellido,direccion,cedula,producto,Nom_img;
-    public ArrayList<Producto> productos;
 
-    public Persona(String uid, String nombre, String apellido, String direccion, String cedula, String producto, String Nom_img) {
-        this.uid = uid;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.cedula = cedula;
-        this.producto = producto;
-        this.Nom_img = Nom_img;
+    private String uid = "";
+    private String nombre = "";
+    private String apellido = "";
+    private String direccion = "";
+    private String cedula = "";
+    private String producto = "";
+    private String nomImg = "";
+    private String correo = "";
+    private String telefono = "";
+    private List<Producto> productos = new ArrayList<>();
+
+    public Persona(String uid, String nombre, String apellido, String direccion,
+            String cedula, String producto, String nomImg) {
+        this(uid, nombre, apellido, direccion, cedula, producto, nomImg, "", "");
+    }
+
+    public Persona(String uid, String nombre, String apellido, String direccion,
+            String cedula, String producto, String nomImg, String correo, String telefono) {
+        setUid(uid);
+        setNombre(nombre);
+        setApellido(apellido);
+        setDireccion(direccion);
+        setCedula(cedula);
+        setProducto(producto);
+        setNom_img(nomImg);
+        setCorreo(correo);
+        setTelefono(telefono);
     }
 
     public String getUid() {
@@ -30,7 +43,7 @@ public class Persona {
     }
 
     public void setUid(String uid) {
-        this.uid = uid;
+        this.uid = nvl(uid);
     }
 
     public String getNombre() {
@@ -38,7 +51,7 @@ public class Persona {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nvl(nombre);
     }
 
     public String getApellido() {
@@ -46,7 +59,7 @@ public class Persona {
     }
 
     public void setApellido(String apellido) {
-        this.apellido = apellido;
+        this.apellido = nvl(apellido);
     }
 
     public String getDireccion() {
@@ -54,7 +67,7 @@ public class Persona {
     }
 
     public void setDireccion(String direccion) {
-        this.direccion = direccion;
+        this.direccion = nvl(direccion);
     }
 
     public String getCedula() {
@@ -62,7 +75,7 @@ public class Persona {
     }
 
     public void setCedula(String cedula) {
-        this.cedula = cedula;
+        this.cedula = nvl(cedula);
     }
 
     public String getProducto() {
@@ -70,24 +83,42 @@ public class Persona {
     }
 
     public void setProducto(String producto) {
-        this.producto = producto;
+        this.producto = nvl(producto);
     }
 
     public String getNom_img() {
-        return Nom_img;
+        return nomImg;
     }
 
-    public void setNom_img(String Nom_img) {
-        this.Nom_img = Nom_img;
+    public void setNom_img(String nomImg) {
+        this.nomImg = nvl(nomImg);
     }
 
-    public ArrayList<Producto> getProductos() {
-        return productos;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setProductos(ArrayList<Producto> productos) {
-        this.productos = productos;
+    public void setCorreo(String correo) {
+        this.correo = nvl(correo);
     }
-    
-    
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = nvl(telefono);
+    }
+
+    public List<Producto> getProductos() {
+        return Collections.unmodifiableList(productos);
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos == null ? new ArrayList<>() : new ArrayList<>(productos);
+    }
+
+    private static String nvl(String s) {
+        return s == null ? "" : s;
+    }
 }
