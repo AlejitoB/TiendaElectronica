@@ -35,12 +35,12 @@ Las pruebas no necesitan XAMPP ni internet: los DAO se prueban contra una base *
 
 **Integración continua:** GitHub Actions corre `mvn test` en cada push a `master` y en cada Pull Request (pestaña *Actions*). El resumen de cobertura por paquete aparece en cada ejecución y el reporte completo se descarga como artefacto `reporte-cobertura-jacoco`.
 
-Flujo: **Portada → Escoger base (Nube / Local) → Inicio de sesión**. El administrador entra al menú de su base y el cliente al menú del cliente.
+Flujo: **Acceso unificado (Base Nube / Local + Inicio de sesión) → Ventana principal por rol**. El administrador accede a **Inventario**, **Pedidos**, **Clientes** y **Auditoría**; el cliente accede a **Tienda** y **Mis Pedidos**.
 
 | Rol | Qué puede hacer |
 |-----|-----------------|
-| Administrador | CRUD de clientes, **Inventario** (crear, editar, eliminar, buscar, stock bajo) |
-| Cliente | **Ir a la Tienda**: catálogo, carrito y pago |
+| Administrador | **Inventario** (crear, editar, eliminar, buscar, stock bajo), **Pedidos** (historial de ventas y métricas), **Clientes** (CRUD unificado en Firebase o MySQL) y **Auditoría** |
+| Cliente | **Tienda**: catálogo por tarjetas, carrito, reserva atómica de stock y pago con Wompi / simulación; **Mis Pedidos** |
 
 ### Pasarela de pagos (Wompi Sandbox o simulada)
 
@@ -61,10 +61,10 @@ Al aprobarse, el stock se descuenta y el pedido se guarda **en una sola transacc
 
 | Paquete | Capa | Contenido |
 |---------|------|-----------|
-| `GUI_Admin`, `GUI_Cliente`, `GUI_Local` | Presentación | Pantallas (NetBeans `.form` + nuevas en código: `InventarioAdministrador`, `TiendaCliente`, `PasarelaPago`) |
-| `Logica_Negocio` | Negocio | `Persona`, `Producto`, `Usuario`, `Carrito`, `Pedido`, `ControlIntentos`, `CatalogoInicial` |
-| `Helpers` | Negocio | Validación, cifrado, pagos, auditoría, configuración, tema visual |
-| `Logica_Conexion` | Datos | `Conexion` (Singleton), DAO de personas y `DAOInterfaceProducto` con `ProductoProvider` (Firestore) y `ProductoDAO` (MySQL) |
+| `GUI_Admin`, `GUI_Cliente`, `GUI_Local` | Presentación | Interfaz unificada Nordic Bento POS en código puro (`VentanaAcceso`, `VentanaPrincipal`, `InventarioAdministrador`, `PanelPedidos`, `PanelClientes`, `PanelAuditoria`, `TiendaCliente`, `PasarelaPago`) |
+| `Logica_Negocio` | Negocio | `Persona`, `Producto`, `Usuario`, `Carrito`, `Pedido`, `ResumenPedido`, `ControlIntentos`, `CatalogoInicial` |
+| `Helpers` | Negocio | Validación, cifrado (`PBKDF2` + `SHA-256`), pagos, auditoría (`HelperAuditoria`, `LectorAuditoria`), configuración, sistema visual (`TemaBento`, `ComponentesBento`, `HelperUI`) |
+| `Logica_Conexion` | Datos | `Conexion` (conexiones independientes por operación), `ServicioPersona` / `PersonaDAO` / `PersonaProvider`, `DAOInterfaceProducto` con `ProductoProvider` (Firestore) y `ProductoDAO` (MySQL) |
 
 ## Brechas de ISO/IEC 25010 atendidas (Tabla 7 del avance)
 
@@ -76,7 +76,7 @@ Al aprobarse, el stock se descuenta y el pedido se guarda **en una sola transacc
 | Usabilidad | Tema unificado; los mensajes nombran el campo y el tipo de error |
 | Fiabilidad | Venta transaccional (0 registros a medias); si la nube cae se ofrece la base local |
 | Seguridad | Credenciales fuera del código; bloqueo al 3.er intento con mensaje genérico; confirmación al eliminar |
-| Mantenibilidad | 19 pruebas unitarias (JUnit 5) sobre validación, pagos, carrito, login y auditoría |
+| Mantenibilidad | 31 pruebas unitarias (JUnit 5) sobre validación, pagos, reserva de stock, carrito, login persistente, clientes y auditoría |
 | Portabilidad | `firebase-admin` 9.11.0 y `mysql-connector-j` 9.4.0; clase principal corregida |
 
 > **Importante:** la llave de Firebase anterior estuvo publicada en el historial de git y Google la desactivó. El proyecto usa ahora un proyecto de Firebase nuevo; su llave (`tienda-electronica.json`) se comparte por privado y nunca se sube al repositorio. Se genera en la consola de Firebase → Configuración del proyecto → Cuentas de servicio → *Generar nueva clave privada*.
