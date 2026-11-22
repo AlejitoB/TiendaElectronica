@@ -21,6 +21,7 @@ class HelperPagoTest {
     @Test
     void datosValidosPasan() {
         assertNull(HelperPago.Validar("Andres Garces", CORREO, "4242 4242 4242 4242", "12/28", "123", HOY));
+        assertNull(HelperPago.Validar("J. O'Connor-Ruiz", CORREO, "4242 4242 4242 4242", "12/28", "123", HOY));
         assertNull(HelperPago.Validar("Ana", CORREO, "3782 822463 10005", "11/26", "1234", HOY)); // Amex: CVV de 4
     }
 

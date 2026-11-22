@@ -21,6 +21,11 @@ class HelperAuditoriaTest {
             assertEquals(2, lineas.size());
             assertTrue(lineas.get(0).endsWith("| ELIMINAR_CLIENTE | Uid=7"));
             assertTrue(lineas.get(1).contains("PED-1 2 x LAP-001"));
+
+            List<LectorAuditoria.Registro> leidos = LectorAuditoria.LeerDesde(Path.of(HelperAuditoria.archivo));
+            assertEquals(2, leidos.size());
+            assertEquals("VENTA", leidos.get(0).accion());
+            assertEquals("ELIMINAR_CLIENTE", leidos.get(1).accion());
         } finally {
             HelperAuditoria.archivo = original;
         }
