@@ -1,21 +1,27 @@
 package Logica_Negocio;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
- * Carrito de compras del cliente. No deja agregar mas unidades de las que hay en inventario.
+ * Carrito de compras del cliente. No deja agregar más unidades de las que hay en inventario.
  */
 public class Carrito {
 
     public static class Item {
 
         public final Producto producto;
+        // Paquete-privado para que pruebas en Logica_Negocio lean directo sin exponer mutación externa.
         public int cantidad;
 
         public Item(Producto producto, int cantidad) {
             this.producto = producto;
             this.cantidad = cantidad;
+        }
+
+        public int getCantidad() {
+            return cantidad;
         }
 
         public long Subtotal() {
@@ -27,6 +33,9 @@ public class Carrito {
 
     /** Agrega unidades del producto. Devuelve null si se pudo o el motivo por el que no. */
     public String Agregar(Producto p, int cantidad) {
+        if (p == null) {
+            return "Seleccione un producto válido";
+        }
         if (cantidad <= 0) {
             return "La cantidad debe ser mayor que cero";
         }
@@ -44,6 +53,23 @@ public class Carrito {
         return null;
     }
 
+    /** Actualiza la cantidad exacta de un artículo; si es <= 0, lo elimina del carrito. */
+    public String ActualizarCantidad(String serial, int nuevaCantidad) {
+        Item item = Buscar(serial);
+        if (item == null) {
+            return "El producto no está en el carrito";
+        }
+        if (nuevaCantidad <= 0) {
+            Quitar(serial);
+            return null;
+        }
+        if (nuevaCantidad > item.producto.getStock()) {
+            return "Solo hay " + item.producto.getStock() + " unidades disponibles de " + item.producto.getNombre();
+        }
+        item.cantidad = nuevaCantidad;
+        return null;
+    }
+
     public void Quitar(String serial) {
         items.removeIf(i -> i.producto.getSerial().equals(serial));
     }
@@ -58,7 +84,7 @@ public class Carrito {
     }
 
     public List<Item> Items() {
-        return items;
+        return Collections.unmodifiableList(items);
     }
 
     public long Total() {
