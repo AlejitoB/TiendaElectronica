@@ -53,8 +53,8 @@ public class HelperPago {
      * que nombra el campo y el tipo de error.
      */
     public static String Validar(String titular, String correo, String numero, String vencimiento, String cvv, YearMonth hoy) {
-        if (titular == null || !titular.trim().matches("[\\p{L} ]{3,60}")) {
-            return "Campo titular: escriba el nombre como aparece en la tarjeta (solo letras)";
+        if (titular == null || !titular.trim().matches("[\\p{L} .'-]{3,60}") || !titular.trim().matches(".*\\p{L}.*")) {
+            return "Campo titular: escriba el nombre como aparece en la tarjeta (sin números)";
         }
         if (correo == null || !correo.trim().matches("[^@\\s]+@[^@\\s]+\\.[^@\\s]+")) {
             return "Campo correo: escriba un correo valido para enviar el comprobante";

@@ -1,27 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Logica_Negocio;
 
 import Helpers.HelperCifrado;
 
 /**
- *
- * @author 1058932609
+ * Usuario autenticado en la aplicación (Administrador o Cliente).
  */
 public abstract class Usuario {
-    
-    // Usuario que inicio sesion (lo asigna InicioSesionAdministrador).
+
     public static Usuario sesion;
 
     private String usu;
-    // Hash SHA-256 de la contrasena; la clave en texto plano nunca se guarda.
+    // Hash PBKDF2 o SHA-256 de la contraseña; la clave en texto plano nunca se guarda.
     private String contra;
 
     public Usuario(String usu, String contra) {
-        this.usu = usu;
-        this.contra = contra;
+        this.usu = usu == null ? "" : usu;
+        this.contra = contra == null ? "" : contra;
     }
 
     public String getUsu() {
@@ -29,7 +23,7 @@ public abstract class Usuario {
     }
 
     public void setUsu(String usu) {
-        this.usu = usu;
+        this.usu = usu == null ? "" : usu;
     }
 
     public String getContra() {
@@ -37,12 +31,22 @@ public abstract class Usuario {
     }
 
     public void setContra(String contra) {
-        this.contra = contra;
+        this.contra = contra == null ? "" : contra;
     }
-    
-    // Metodo plantilla: el LogOn es el mismo para Administrador y Cliente (recibe hashes SHA-256).
-    public boolean LogOn(String usuario, String contraseña) {
-        return HelperCifrado.CifrarSHA256(usu).equals(usuario) && contra.equalsIgnoreCase(contraseña);
+
+    /** Verifica usuario y contraseña en texto plano contra el hash almacenado (PBKDF2 o SHA-256). */
+    public boolean Autenticar(String usuarioPlano, String clavePlano) {
+        if (usuarioPlano == null || clavePlano == null) {
+            return false;
+        }
+        return HelperCifrado.IgualConstante(usu, usuarioPlano)
+                && HelperCifrado.VerificarClave(clavePlano, contra);
     }
-    
+
+    /** Compatibilidad con pruebas y flujos que comparan hashes SHA-256 directamente. */
+    public boolean LogOn(String usuarioSha, String contraseñaSha) {
+        return HelperCifrado.IgualConstante(HelperCifrado.CifrarSHA256(usu), usuarioSha)
+                && HelperCifrado.IgualConstante(contra.toLowerCase(),
+                        contraseñaSha == null ? "" : contraseñaSha.toLowerCase());
+    }
 }
