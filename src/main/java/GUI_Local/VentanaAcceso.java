@@ -15,11 +15,13 @@ import Logica_Negocio.Cliente;
 import Logica_Negocio.ControlIntentos;
 import Logica_Negocio.Usuario;
 import com.formdev.flatlaf.FlatClientProperties;
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -28,6 +30,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.geom.Path2D;
+import java.awt.image.BufferedImage;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -87,13 +90,15 @@ public class VentanaAcceso extends JFrame {
     }
 
     private JPanel crearPanelMarca() {
+        BufferedImage fotoPortada = ComponentesBento.CargarRecursoImagen("/imagenes/techshop-portada.jpg");
         JPanel panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                float w = getWidth();
-                float h = getHeight() - 2f;
+                g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+                int w = getWidth();
+                int h = getHeight() - 2;
                 float r = TemaBento.RADIO_TARJETA;
                 Path2D.Float forma = new Path2D.Float();
                 forma.moveTo(r, 0);
@@ -104,34 +109,46 @@ public class VentanaAcceso extends JFrame {
                 forma.lineTo(0, r);
                 forma.quadTo(0, 0, r, 0);
                 forma.closePath();
-                g2.setColor(TemaBento.TEAL);
-                g2.fill(forma);
+
+                if (fotoPortada != null) {
+                    g2.setClip(forma);
+                    ComponentesBento.DibujarImagenCover(g2, fotoPortada, 0, 0, w, h, 0.82, 0.35);
+                    // Degradado Nocturno + Teal: mantiene el neón "Tech Shop" nítido arriba y legibilidad abajo.
+                    GradientPaint gp = new GradientPaint(0, 0, new Color(12, 24, 24, 25),
+                            0, h, new Color(10, 48, 45, 238));
+                    g2.setPaint(gp);
+                    g2.fillRect(0, 0, w, h);
+                } else {
+                    g2.setColor(TemaBento.TEAL);
+                    g2.fill(forma);
+                }
                 g2.dispose();
                 super.paintComponent(g);
             }
         };
         panel.setOpaque(false);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(34, 34, 34, 30));
+        panel.setBorder(BorderFactory.createEmptyBorder(26, 32, 24, 28));
 
-        JPanel filaMarca = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        filaMarca.setOpaque(false);
-        EtiquetaPildora pillMarca = new EtiquetaPildora("Tech Shop", Color.WHITE, TemaBento.TEAL);
-        pillMarca.setFont(TemaBento.Fuente(Font.BOLD, 13));
-        pillMarca.setBorder(BorderFactory.createEmptyBorder(6, 14, 6, 14));
-        filaMarca.add(pillMarca);
-        filaMarca.setAlignmentX(LEFT_ALIGNMENT);
-        panel.add(filaMarca);
+        panel.add(Box.createVerticalStrut(128));
 
-        panel.add(Box.createVerticalStrut(26));
-
-        JLabel headline = new JLabel("<html>Tu tienda de<br>tecnología en un<br>solo lugar</html>");
-        headline.setFont(TemaBento.Fuente(Font.BOLD, 28));
+        JLabel headline = new JLabel("<html>Tu tienda de<br>tecnología en un solo lugar</html>") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.translate(1, 2);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.45f));
+                super.paintComponent(g2);
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
+        headline.setFont(TemaBento.Fuente(Font.BOLD, 24));
         headline.setForeground(Color.WHITE);
         headline.setAlignmentX(LEFT_ALIGNMENT);
         panel.add(headline);
 
-        panel.add(Box.createVerticalGlue());
+        panel.add(Box.createVerticalStrut(18));
 
         for (String beneficio : new String[]{
             "Inventario en tiempo real",
@@ -141,15 +158,16 @@ public class VentanaAcceso extends JFrame {
             JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             fila.setOpaque(false);
             fila.setAlignmentX(LEFT_ALIGNMENT);
-            EtiquetaPildora p = new EtiquetaPildora(beneficio, Color.WHITE, TemaBento.TEXTO);
+            EtiquetaPildora p = new EtiquetaPildora(beneficio, new Color(255, 255, 255, 240), TemaBento.TEXTO);
             p.setIcon(ComponentesBento.IconoCheck(12, TemaBento.TEAL));
             p.setIconTextGap(8);
             p.setFont(TemaBento.Fuente(Font.BOLD, 12));
             p.setBorder(BorderFactory.createEmptyBorder(6, 14, 6, 14));
             fila.add(p);
             panel.add(fila);
-            panel.add(Box.createVerticalStrut(10));
+            panel.add(Box.createVerticalStrut(9));
         }
+        panel.add(Box.createVerticalGlue());
         return panel;
     }
 

@@ -15,6 +15,8 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedHashMap;
@@ -432,6 +434,29 @@ public final class ComponentesBento {
             }
         }
         return AvatarIniciales(iniciales, ancho, alto);
+    }
+
+    /** Carga una imagen empaquetada en el classpath (src/main/resources). */
+    public static BufferedImage CargarRecursoImagen(String rutaClasspath) {
+        try (InputStream in = ComponentesBento.class.getResourceAsStream(rutaClasspath)) {
+            return in == null ? null : ImageIO.read(in);
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    /** Dibuja una imagen cubriendo el área destino (estilo cover) alrededor del punto focal [0..1]. */
+    public static void DibujarImagenCover(Graphics2D g2, BufferedImage foto, int x, int y, int w, int h,
+            double focoX, double focoY) {
+        if (foto == null || w <= 0 || h <= 0) {
+            return;
+        }
+        double scale = Math.max((double) w / foto.getWidth(), (double) h / foto.getHeight());
+        int dw = (int) Math.round(foto.getWidth() * scale);
+        int dh = (int) Math.round(foto.getHeight() * scale);
+        int dx = x - (int) Math.round((dw - w) * focoX);
+        int dy = y - (int) Math.round((dh - h) * focoY);
+        g2.drawImage(foto, dx, dy, dw, dh, null);
     }
 
     private static ImageIcon AvatarIniciales(String iniciales, int ancho, int alto) {
